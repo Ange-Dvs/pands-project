@@ -15,9 +15,9 @@
 #   https://www.pythoncharts.com/matplotlib/histograms/#:~:text=The%20histogram%20bars%20have%20no,some%20separation%20between%20the%20bar.&text=An%20alternative%20is%20just%20to%20make%20the%20bars%20skinnier%20using%20rwidth%20.
 #   https://matplotlib.org/stable/users/explain/colors/colors.html
 #   https://levelup.gitconnected.com/unveiling-the-mysteries-of-the-iris-dataset-a-comprehensive-analysis-and-machine-learning-f5c4f9dbcd6d
-#   
-#   
-#   
+#   https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.clf.html#matplotlib-pyplot-clf 
+#   https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.suptitle.html
+#   https://www.geeksforgeeks.org/matplotlib-pyplot-suptitle-function-in-python/
 #   
 #   
 #   
