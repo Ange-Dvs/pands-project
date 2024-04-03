@@ -1,6 +1,6 @@
 # analysis.py
 # For the project this program should: 
-#   1. Output a summary of each variable to a single text file
+#   1. Output a summary of each variable to a single text file > Started
 #   2. Saves a histogram of each variable to png files > Done
 #	3. Outputs a scatter plot of each pair of variables > Done (could be improved)
 #   Performs any other analysis you think is appropriate
@@ -9,6 +9,47 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Setting filename for text file
+FILENAME = 'IRIS_Summary.txt'
+
+def write_summary_file(): # creating a function which will create the text file when called.
+    with open(FILENAME, 'a') as f: # opens the file assigned to the FILENAME variable in append mode for text files "a"
+        f.write(str(intro)) # writing as .txt means the answer must be cast to a string to store
+        f.write(str(num_values)) # writing as .txt means the answer must be cast to a string to store
+
+def create_histograms(): # creating histograms of individual variables
+    # Creating histogram for sepal length	
+
+    plt.hist(df["sepal length (cm)"])
+    plt.xlabel('Sepal length (cm)') # setting label for x axis 
+    plt.title("Distribution of sepal length") # setting plot title
+    plt.savefig("1_sepal_length_hist.png") # saving histogram as PNG file
+    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
+    # Creating histogram for sepal width	
+
+    plt.hist(df["sepal width (cm)"])
+    plt.xlabel('Sepal width (cm)') # setting label for x axis 
+    plt.title("Distribution of sepal width") # setting plot title
+    plt.savefig("2_sepal_width_hist.png") # saving histogram as PNG file
+    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
+    # Creating histogram for petal length	
+
+    plt.hist(df["petal length (cm)"])
+    plt.xlabel('Petal length (cm)') # setting label for x axis 
+    plt.title("Distribution of petal length (cm)") # setting plot title
+    plt.savefig("3_petal_length_hist.png") # saving histogram as PNG file
+    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
+    # Creating histogram for petal width
+
+    plt.hist(df["petal width (cm)"])
+    plt.xlabel('Petal width (cm)') # setting label for x axis 
+    plt.title("Distribution of petal width (cm)") # setting plot title
+    plt.savefig("4_petal_width_hist.png") # saving histogram as PNG file
+    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
 # fetching data from csv file
 df = pd.read_csv('iris_data.csv')
 
@@ -16,40 +57,20 @@ df = pd.read_csv('iris_data.csv')
 setosa_df = df[df['class'] == 'Iris-setosa']
 versicolor_df = df[df['class'] == 'Iris-versicolor']
 virginica_df = df[df['class'] == 'Iris-virginica']
-'''
-# Creating histogram for sepal length	
 
-plt.hist(df["sepal length (cm)"])
-plt.xlabel('Sepal length (cm)') # setting label for x axis 
-plt.title("Distribution of sepal length") # setting plot title
-plt.savefig("1_sepal_length_hist.png") # saving histogram as PNG file
-plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+# Printing a summary of the numeric valyes of the dataset
 
-# Creating histogram for sepal width	
+num_values = df.describe()
+intro = (f'The IRIS dataset, created in 1936, is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nSpecies:\n\tThe dataset consists of measurements for 3 different classes (setosa, versicolor and virginica) of Iris flowers.\nThere are 50 entries per class detailed in the dataset.\nAs the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length (cm), sepal width (cm), petal length (cm) and petal width (cm)\nThese four varaibles are numeric values and looking at the raw data we can see decimal places are present.\nWith this, the data type used for this variables will be float.\n\n')
 
-plt.hist(df["sepal width (cm)"])
-plt.xlabel('Sepal width (cm)') # setting label for x axis 
-plt.title("Distribution of sepal width") # setting plot title
-plt.savefig("2_sepal_width_hist.png") # saving histogram as PNG file
-plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+write_summary_file()
+print('Summary text file has been created.\n')
+create_histograms ()
+print('Histogram pngs have been created\n')
 
-# Creating histogram for petal length	
-
-plt.hist(df["petal length (cm)"])
-plt.xlabel('Petal length (cm)') # setting label for x axis 
-plt.title("Distribution of petal length (cm)") # setting plot title
-plt.savefig("3_petal_length_hist.png") # saving histogram as PNG file
-plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
-
-# Creating histogram for petal width
-
-plt.hist(df["petal width (cm)"])
-plt.xlabel('Petal width (cm)') # setting label for x axis 
-plt.title("Distribution of petal width (cm)") # setting plot title
-plt.savefig("4_petal_width_hist.png") # saving histogram as PNG file
-plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
 '''
 #############################
+'''
 # Creating a scatter plot showing each pair of variables 
 # Setting variables for comparison across the classes  which will be used for the subplots
 setosa_sepal_length = setosa_df['sepal length (cm)']
