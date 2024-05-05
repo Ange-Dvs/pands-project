@@ -8,121 +8,154 @@
 import pandas as pd
 import numpy
 import matplotlib.pyplot as plt
+import os
 
 # Setting filename for text file
 FILENAME = 'IRIS_Summary.txt'
+PNG_FILENAME = '1_sepal_length_hist.png'
+variable_to_plot = 'sepal length (cm)'
 
+def check_png_file_exists(PNG_FILENAME):
+    if os.path.exists(PNG_FILENAME):
+        raise FileExistsError
+'''
 def write_summary_file(): # creating a function which will create the text file when called.
-    with open(FILENAME, 'a') as f: # opens the file assigned to the FILENAME variable in append mode for text files "a"
+    with open(FILENAME, 'x') as f: # opens the file assigned to the FILENAME variable in append mode for text files "a"
         f.write(str(intro)) # writing as .txt means the answer must be cast to a string to store
         f.write(str(num_values)) # writing as .txt means the answer must be cast to a string to store
         
         count_class = df["class"].value_counts() # getting the count of the male and female entries in the dataset
         f.write(str(count_class))
 
-def create_histograms(): # creating histograms of individual variables
-    # Creating histogram for sepal length	
-    plt.figure(figsize=(10,5))
-    plt.subplot(1, 2, 1)
-    plt.hist(df["sepal length (cm)"], label= 'All\n types')
-    plt.xlabel('Sepal length (cm)') # setting label for x axis 
-    plt.title("Distribution of sepal length") # setting plot title
-    plt.legend()
-    #plt.savefig("sepal_length_hist.png")
+def create_sepal_length_hist(PNG_FILENAME, variable_to_plot): # creating histogram of sepal length
+    # Creating histogram for sepal length not deferentiating per species
+        try: 
+                check_png_file_exists(PNG_FILENAME)
+                print(f'Creating {PNG_FILENAME}')
+                plt.figure(figsize=(10,5))
+                plt.subplot(1, 2, 1)
+                plt.hist(df[variable_to_plot], label= 'All\n types')
+                plt.xlabel(variable_to_plot) # setting label for x axis 
+                plt.title(f'Distribution of {variable_to_plot}') # setting plot title
+                plt.legend()
+                #plt.savefig("sepal_length_hist.png")
 
-    plt.subplot(1, 2, 2)
-    # Concatenate the petal width data from all three species
-    all_sepal_lengths = [setosa_df['sepal length (cm)'], versicolor_df['sepal length (cm)'], virginica_df['sepal length (cm)']]
+                plt.subplot(1, 2, 2)
+                # Concatenate the petal width data from all three species
+                all_sepal_lengths = [setosa_df[variable_to_plot], versicolor_df[variable_to_plot], virginica_df[variable_to_plot]]
 
-    # Plotting a histogram
-    plt.hist(all_sepal_lengths,
-            bins=10,
-            stacked=True,
-            label=['Setosa', 'Versicolor', 'Virginica'],
-            edgecolor='white',
-            color=['violet', 'navy', 'orange'])
-    plt.title("Distribution of sepal length per species of Iris") # setting plot title
-    plt.tight_layout()
-    plt.legend()
-    plt.savefig("1_sepal_length_hist.png") # saving histogram as PNG file
-    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+                # Plotting a histogram
+                plt.hist(all_sepal_lengths,
+                        bins=10,
+                        stacked=True,
+                        label=['Setosa', 'Versicolor', 'Virginica'],
+                        edgecolor='white',
+                        color=['violet', 'navy', 'orange'])
+                plt.title(f'Distribution of {variable_to_plot} per species of Iris') # setting plot title
+                plt.tight_layout()
+                plt.legend()
+                plt.savefig(PNG_FILENAME) # saving histogram as PNG file
+                plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
 
-    # Creating histogram for sepal width	
-    plt.figure(figsize=(10,5))
-    plt.subplot(1, 2, 1)
-    plt.hist(df["sepal width (cm)"], label= 'All\n types')
-    plt.xlabel('Sepal width (cm)') # setting label for x axis 
-    plt.title("Distribution of sepal width") # setting plot title
-    plt.legend()
-    #plt.savefig("sepal_length_hist.png")
+        except FileExistsError:
+                print(f'The file {PNG_FILENAME} already exists.')
 
-    plt.subplot(1, 2, 2)
-    # Concatenate the petal width data from all three species
-    all_sepal_widths = [setosa_df['sepal width (cm)'], versicolor_df['sepal width (cm)'], virginica_df['sepal width (cm)']]
+def create_sepal_width_hist(PNG_FILENAME, variable_to_plot): # creating histogram of sepal width
+        try: 
+                check_png_file_exists(PNG_FILENAME)
+                print(f'Creating {PNG_FILENAME}')
+                # Creating histogram for sepal width	
+                plt.figure(figsize=(10,5))
+                plt.subplot(1, 2, 1)
+                plt.hist(df[variable_to_plot], label= 'All\n types')
+                plt.xlabel(variable_to_plot) # setting label for x axis 
+                plt.title(f'Distribution of {variable_to_plot}') # setting plot title
+                plt.legend()
+                #plt.savefig("sepal_length_hist.png")
 
-    # Plotting a histogram
-    plt.hist(all_sepal_widths,
-            bins=10,
-            stacked=True,
-            label=['Setosa', 'Versicolor', 'Virginica'],
-            edgecolor='white',
-            color=['violet', 'navy', 'orange'])
-    plt.title("Distribution of sepal width per species of Iris") # setting plot title
-    plt.tight_layout()
-    plt.legend()
-    plt.savefig("2_sepal_width_hist.png") # saving histogram as PNG file
-    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+                plt.subplot(1, 2, 2)
+                # Concatenate the petal width data from all three species
+                all_sepal_widths = [setosa_df[variable_to_plot], versicolor_df[variable_to_plot], virginica_df[variable_to_plot]]
 
-    # Creating histogram for petal length
+                # Plotting a histogram
+                plt.hist(all_sepal_widths,
+                        bins=10,
+                        stacked=True,
+                        label=['Setosa', 'Versicolor', 'Virginica'],
+                        edgecolor='white',
+                        color=['violet', 'navy', 'orange'])
+                plt.title(f'Distribution of {variable_to_plot} per species of Iris') # setting plot title
+                plt.tight_layout()
+                plt.legend()
+                plt.savefig(PNG_FILENAME) # saving histogram as PNG file
+                plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
 
-    plt.figure(figsize=(10,5))
-    plt.subplot(1, 2, 1)
-    plt.hist(df["petal length (cm)"], label= 'All\n types')
-    plt.xlabel('Petal length (cm)') # setting label for x axis 
-    plt.title("Distribution of petal length (cm)") # setting plot title
-    plt.legend()
-    #plt.savefig("sepal_length_hist.png")
+        except FileExistsError:
+                print(f'The file {PNG_FILENAME} already exists.')
 
-    plt.subplot(1, 2, 2)
-    # Concatenate the petal width data from all three species
-    all_petal_lengths = [setosa_df['petal length (cm)'], versicolor_df['petal length (cm)'], virginica_df['petal length (cm)']]
-    plt.hist(all_petal_lengths,
-            bins=10,
-            stacked=True,
-            label=['Setosa', 'Versicolor', 'Virginica'],
-            edgecolor='white',
-            color=['violet', 'navy', 'orange'])
-    plt.title("Distribution of petal length per species of Iris") # setting plot title
-    plt.tight_layout()
-    plt.legend()
-    plt.savefig("3_petal_length_hist.png")
-    plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
 
-    # Creating histogram for petal width
-    plt.figure(figsize=(10,5))
-    plt.subplot(1, 2, 1)
-    plt.hist(df["petal width (cm)"], label= 'All\n types')
-    plt.xlabel('Petal width (cm)') # setting label for x axis 
-    plt.title("Distribution of petal width (cm)") # setting plot title
-    # plt.savefig("petal_width_hist.png")
-    plt.legend()
-    #plt.savefig("sepal_length_hist.png")
 
-    plt.subplot(1, 2, 2)
-    # Concatenate the petal width data from all three species
-    all_petal_widths = [setosa_df['petal width (cm)'], versicolor_df['petal width (cm)'], virginica_df['petal width (cm)']]
+def create_petal_length_hist(PNG_FILENAME, variable_to_plot): # creating histogram of petal length
+        try: 
+                check_png_file_exists(PNG_FILENAME)
+                print(f'Creating {PNG_FILENAME}')
+                plt.figure(figsize=(10,5))
+                plt.subplot(1, 2, 1)
+                plt.hist(df[variable_to_plot], label= 'All\n types')
+                plt.xlabel(variable_to_plot) # setting label for x axis 
+                plt.title(f'Distribution of {variable_to_plot} (cm)') # setting plot title
+                plt.legend()
+                #plt.savefig("sepal_length_hist.png")
 
-    # Plotting a histogram
-    plt.hist(all_petal_widths,
-            bins=10,
-            stacked=True,
-            label=['Setosa', 'Versicolor', 'Virginica'],
-            edgecolor='white',
-            color=['violet', 'navy', 'orange'])
-    plt.title("Distribution of petal width per species of Iris") # setting plot title
-    plt.tight_layout()
-    plt.legend()
-    plt.savefig("4_petal_width_hist.png")
+                plt.subplot(1, 2, 2)
+                # Concatenate the petal width data from all three species
+                all_petal_lengths = [setosa_df[variable_to_plot], versicolor_df[variable_to_plot], virginica_df[variable_to_plot]]
+                plt.hist(all_petal_lengths,
+                        bins=10,
+                        stacked=True,
+                        label=['Setosa', 'Versicolor', 'Virginica'],
+                        edgecolor='white',
+                        color=['violet', 'navy', 'orange'])
+                plt.title(f'Distribution of {variable_to_plot} per species of Iris') # setting plot title
+                plt.tight_layout()
+                plt.legend()
+                plt.savefig(PNG_FILENAME)
+                plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
+        except FileExistsError:
+                print(f'The file {PNG_FILENAME} already exists.')
+
+def create_petal_width_hist(PNG_FILENAME, variable_to_plot): # creating histogram of petal width
+        try: 
+                check_png_file_exists(PNG_FILENAME)
+                print(f'Creating {PNG_FILENAME}')
+                plt.figure(figsize=(10,5))
+                plt.subplot(1, 2, 1)
+                plt.hist(df[variable_to_plot ], label= 'All\n types')
+                plt.xlabel(variable_to_plot) # setting label for x axis 
+                plt.title(f'Distribution of {variable_to_plot }') # setting plot title
+                # plt.savefig("petal_width_hist.png")
+                plt.legend()
+                #plt.savefig("sepal_length_hist.png")
+
+                plt.subplot(1, 2, 2)
+                # Concatenate the petal width data from all three species
+                all_petal_widths = [setosa_df[variable_to_plot ], versicolor_df[variable_to_plot ], virginica_df[variable_to_plot ]]
+
+                # Plotting a histogram
+                plt.hist(all_petal_widths,
+                        bins=10,
+                        stacked=True,
+                        label=['Setosa', 'Versicolor', 'Virginica'],
+                        edgecolor='white',
+                        color=['violet', 'navy', 'orange'])
+                plt.title(f'Distribution of {variable_to_plot } per species of Iris') # setting plot title
+                plt.tight_layout()
+                plt.legend()
+                plt.savefig(PNG_FILENAME)
+
+        except FileExistsError:
+                print(f'The file {PNG_FILENAME} already exists.')
 
 def scatter_all_variables():
     # Creating a scatter plot showing each pair of variables 
@@ -244,6 +277,40 @@ def scatter_all_variables():
     plt.suptitle('All variables', y=1.08, fontsize=32)
     plt.figlegend(loc = "upper center", ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14) # creating one legend for the subplots and setting it's location to the top center for the plot
     plt.savefig("5_all_variables_scatter.png", bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust the title
+'''
+
+def create_histograms(PNG_FILENAME, variable_to_plot): # creating histogram of sepal length
+    # Creating histogram for sepal length not deferentiating per species
+        try: 
+                check_png_file_exists(PNG_FILENAME)
+                print(f'Creating {PNG_FILENAME}')
+                plt.figure(figsize=(10,5))
+                plt.subplot(1, 2, 1)
+                plt.hist(df[variable_to_plot], label= 'All\n types')
+                plt.xlabel(variable_to_plot) # setting label for x axis 
+                plt.title(f'Distribution of {variable_to_plot}') # setting plot title
+                plt.legend()
+                #plt.savefig("sepal_length_hist.png")
+
+                plt.subplot(1, 2, 2)
+                # Concatenate the petal width data from all three species
+                all_sepal_lengths = [setosa_df[variable_to_plot], versicolor_df[variable_to_plot], virginica_df[variable_to_plot]]
+
+                # Plotting a histogram
+                plt.hist(all_sepal_lengths,
+                        bins=10,
+                        stacked=True,
+                        label=['Setosa', 'Versicolor', 'Virginica'],
+                        edgecolor='white',
+                        color=['violet', 'navy', 'orange'])
+                plt.title(f'Distribution of {variable_to_plot} per species of Iris') # setting plot title
+                plt.tight_layout()
+                plt.legend()
+                plt.savefig(PNG_FILENAME) # saving histogram as PNG file
+                plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
+        except FileExistsError:
+                print(f'The file {PNG_FILENAME} already exists.')
 
 # fetching data from csv file
 df = pd.read_csv('iris_data.csv')
@@ -270,13 +337,31 @@ virginica_petal_length = virginica_df['petal length (cm)'].to_numpy()
 virginica_petal_width = virginica_df['petal width (cm)'].to_numpy()
 
 # Printing a summary of the numeric valyes of the dataset
-
+'''
 num_values = df.describe()
 intro = (f'The IRIS dataset, created in 1936, is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nSpecies:\n\tThe dataset consists of measurements for 3 different classes (setosa, versicolor and virginica) of Iris flowers.\nThere are 50 entries per class detailed in the dataset.\nAs the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length (cm), sepal width (cm), petal length (cm) and petal width (cm)\nThese four variables are numeric values and looking at the raw data we can see decimal places are present.\nWith this, the data type used for this variables will be float.\n\n')
 
-write_summary_file()
-print('Summary text file has been created.\n')
-create_histograms()
-print('Histogram pngs have been created\n')
-scatter_all_variables()
-print('Scatter plot of all variables has been created\n')
+try: 
+    write_summary_file()
+
+except FileExistsError: 
+    print (f'\nError: Filename {FILENAME} already exists in folder. \nNo changes will be made to {FILENAME} and no new .txt file will be generated.\n')
+'''
+create_histograms(PNG_FILENAME, variable_to_plot)
+PNG_FILENAME = '2_sepal_width_hist.png'
+variable_to_plot = 'sepal width (cm)'
+
+create_histograms(PNG_FILENAME, variable_to_plot)
+PNG_FILENAME = '3_petal_length_hist.png'
+variable_to_plot = 'petal length (cm)'
+
+create_histograms(PNG_FILENAME,variable_to_plot)
+PNG_FILENAME = '4_petal_width_hist.png'
+variable_to_plot = 'petal width (cm)'
+
+create_histograms(PNG_FILENAME, variable_to_plot )
+
+print('Histogram code has finished\n')
+
+#scatter_all_variables()
+#print('Scatter plot of all variables has been created\n')
