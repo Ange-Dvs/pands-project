@@ -274,8 +274,6 @@ virginica_petal_width = virginica_df['petal width (cm)'].to_numpy()
 num_values = df.describe()
 intro = (f'The IRIS dataset, created in 1936, is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nSpecies:\n\tThe dataset consists of measurements for 3 different classes (setosa, versicolor and virginica) of Iris flowers.\nThere are 50 entries per class detailed in the dataset.\nAs the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length (cm), sepal width (cm), petal length (cm) and petal width (cm)\nThese four variables are numeric values and looking at the raw data we can see decimal places are present.\nWith this, the data type used for this variables will be float.\n\n')
 
-
-
 write_summary_file()
 print('Summary text file has been created.\n')
 create_histograms()
