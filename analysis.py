@@ -19,7 +19,7 @@ def check_png_file_exists(PNG_filenames):
 
 def write_summary_file(FILENAME): # creating a function which will create the text file when called.
         try:
-                with open(FILENAME, 'x') as f: # opens the file assigned to the FILENAME variable in append mode for text files "a"
+                with open(FILENAME, 'x') as f: # "x" creates the new text file and the FILENAME variable defined in the main code is used to name the file.
                         f.write(str(intro)) # writing as .txt means the answer must be cast to a string to store
                         f.write(str(num_values)) # writing as .txt means the answer must be cast to a string to store
                         
@@ -72,16 +72,6 @@ def create_histograms(PNG_filenames, variable_to_plot): # creating histogram of 
 def scatter_all_variables(PNG_filenames):
     # Creating a scatter plot showing each pair of variables 
     # Creating the .png file for the scatter plot containing the sub-plots of the each variable compared 
-    # Setting variables for comparison across the species which will be used for the subplots
-    # sepal length vs sepal width, sepal length vs petal length, sepal length vs petal width
-    # sepal width vs petal length, sepal width vs petal width
-    # petal length vs petal width
-    # petal width
-    # Setting variables for comparison across the species which will be used for the subplots
-    # sepal length vs sepal width, sepal length vs petal length, sepal length vs petal width
-    # sepal width vs petal length, sepal width vs petal width
-    # petal length vs petal width
-    # petal width
         try: 
                 check_png_file_exists(PNG_filenames)
                 plt.figure(figsize=(9, 9))
