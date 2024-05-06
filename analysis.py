@@ -12,7 +12,6 @@ import os
 
 # Setting filename for text file
 FILENAME = 'IRIS_Summary.txt'
-SCATTER_FILENAME = '5_all_variables_scatter.png'
 
 def check_png_file_exists(PNG_filenames):
     if os.path.exists(PNG_filenames):
@@ -36,10 +35,8 @@ def create_histograms(PNG_filenames, variable_to_plot): # creating histogram of 
                 check_png_file_exists(PNG_filenames)
                 plt.figure(figsize=(10,5))
                 plt.subplot(1, 2, 1)
-                plt.hist(df[variable_to_plot], label= 'All\n types')
-                plt.xlabel(variable_to_plot) # setting label for x axis 
-                plt.title(f'Distribution of {variable_to_plot}') # setting plot title
-                plt.legend()
+                plt.hist(df[variable_to_plot])
+                plt.title('All classes of Iris together')
                 #plt.savefig("sepal_length_hist.png")
 
                 plt.subplot(1, 2, 2)
@@ -53,11 +50,19 @@ def create_histograms(PNG_filenames, variable_to_plot): # creating histogram of 
                         label=['Setosa', 'Versicolor', 'Virginica'],
                         edgecolor='white',
                         color=['violet', 'navy', 'orange'])
-                plt.title(f'Distribution of {variable_to_plot} per species of Iris') # setting plot title
+                plt.title('Colour coded per class of Iris')
+                plt.yticks([])
+
                 plt.tight_layout()
                 plt.legend()
-                plt.savefig(PNG_filenames) # saving histogram as PNG file
+
+                plt.suptitle(f'Distribution of {variable_to_plot}',  fontsize = 18, y= 1.05) # setting the title for the subplots
+                # Adding a super x label to replace having two separate labels for the x axis
+                plt.figtext(0.5, -0.01, f'{variable_to_plot}', ha='center', fontsize=12, fontstyle='italic')
+
+                plt.savefig(PNG_filenames, bbox_inches='tight') # saving scatter plotas PNG file with bbox_inches set to tight to adjust the title
                 plt.clf() # clears the current plot to allow a fresh plot for the next histogram to be created
+
                 print(f'Histogram {PNG_filenames} created.\n')
 
         except FileExistsError:
