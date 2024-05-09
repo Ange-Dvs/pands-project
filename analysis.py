@@ -64,118 +64,98 @@ def create_histograms(PNG_filenames, variable_to_plot): # creating a function wh
         except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
                 print(f'Error: Filename {PNG_filenames} already exists in folder. \n') # printing the error that the histogram already exists
 
-def scatter_all_variables(PNG_filenames):
-    # Creating a scatter plot showing each pair of variables 
+def create_scatter_all_variables(x_variable, y_variable, PNG_filenames):
+        # Creating a scatter plot showing each pair of variables 
     # Creating the .png file for the scatter plot containing the sub-plots of the each variable compared 
         try: # First this path is attempted to be executed
                 check_png_file_exists(PNG_filenames) # the function earlier created to check if the png file exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition.
-                plt.figure(figsize=(9, 9)) # figure size is set to avoid the plot being overloaded
-                plt.subplot(4, 4, 1)  # plotting the subplot to be placed in the first position. The size of the subplot is also set with 4 rows & columns.
-                plt.figtext(.16, .82, 'Sepal\nLength', ha='center', fontsize=22, fontstyle='italic') # creating text to enter in the first subplot. The x & y points are set for the location of the text. The alignment, size and style of the font is set.  
-                plt.yticks([]) # y ticks are removed 
-                plt.xticks([]) # x ticks are removed 
+                if i == 1 or i == 6 or i == 11 or i == 16:
+                    plt.subplot(4,4,i)
+                    plt.yticks([])
+                    plt.xticks([])
+                    plt.plot()
+                    if i == 1:
+                        plt.figtext(.16, .82, 'Sepal\nLength', ha='center', fontsize=22, fontstyle='italic')
+                    elif i == 6:
+                        plt.figtext(.39, .59, 'Sepal\nWidth', ha='center', fontsize=22, fontstyle='italic')
+                    elif i == 11:
+                        plt.figtext(.63, .35, 'Petal\nLength', ha='center', fontsize=22, fontstyle='italic')
+                    elif i == 16:
+                        plt.figtext(.86, .12, 'Petal\nWidth', ha='center', fontsize=22, fontstyle='italic')
+                        plt.tight_layout()
+                        plt.suptitle('All variables', y=1.08, fontsize=32)
+                        plt.figlegend(loc = "upper center", ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14, labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top center for the plot. Manually setting the labels to avoid it being set repeatly in the loop
+                        plt.savefig(PNG_filenames, bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust to fit the whole figure
+                else:
+                    plt.subplot(4,4,i)
+                    plt.scatter(setosa_df[x_variable], setosa_df[y_variable], color='violet')
+                    plt.scatter(versicolor_df[x_variable], versicolor_df[y_variable], color='navy')
+                    plt.scatter(virginica_df[x_variable], virginica_df[y_variable], color='orange')
+                    if i == 3 or i == 7 or i == 8 or i == 9 or i == 10 or i == 14:
+                        plt.yticks([])
+                        plt.xticks([])
+                    elif i == 2:
+                        plt.yticks([])
+                        plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False)
+                    elif i == 4: 
+                        plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
+                        plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False)
+                    elif i == 5:
+                        plt.xticks([])
+                    elif i == 12:
+                        plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
+                        plt.xticks([])
+                    elif i == 15:
+                        plt.yticks([])
 
-                plt.subplot(4, 4, 2)  # plotting the subplot to be placed in the second position. The sepal width on x axis vs sepal length on y axis will be reflected in this subplot 
-                plt.scatter(setosa_sepal_width, setosa_sepal_length, color='violet', label='Setosa') # variables selected for the sepal width & length for Setosa class, the colour is assigned and the label is set.
-                plt.scatter(versicolor_sepal_width, versicolor_sepal_length, color='navy', label='Versicolor') # variables selected for the sepal width & length for Versicolor class, the colour is assigned and the label is set.
-                plt.scatter(virginica_sepal_width, virginica_sepal_length, color='orange', label='Virginica') # variables selected for the sepal width & length for Virginica class, the colour is assigned and the label is set.
-                plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False) # adjust the location of the ticks on the x axis to be positioned at the top of the plot
-                plt.yticks([]) # removing y ticks
+        except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
+                print(f'Error: Filename {PNG_filenames} already exists in folder.\n') # printing the error that the histogram already exists
 
-                plt.subplot(4, 4, 3)  # plotting the subplot to be placed in the second position. The petal length on x axis vs sepal length on y axis will be reflected in this subplot 
-                plt.scatter(setosa_petal_length, setosa_sepal_length, color='violet')
-                plt.scatter(versicolor_petal_length, versicolor_sepal_length, color='navy')
-                plt.scatter(virginica_petal_length, virginica_sepal_length, color='orange')
+def setting_axis_limits(): # function to overwrite the range automatically populated for plots and instead use set values for ranges for the x and y axis 
+    ymin = 0
+    if i == 1:
+        ymax = 19.5
+    elif i == 2:
+        ymax = 16.5
+    elif i == 3:
+        ymax = 38
+    else: 
+        ymax = 42
+    plt.ylim(ymin, ymax) # setting min and max values for the y axis 
+
+def set_bins_width(histogram_to_plot):
+        # Compute the bin edges based on the overall range of the variables
+        min_width = min(setosa_df[histogram_to_plot].min(), versicolor_df[histogram_to_plot].min(), virginica_df[histogram_to_plot].min())
+        max_width = max(setosa_df[histogram_to_plot].max(), versicolor_df[histogram_to_plot].max(), virginica_df[histogram_to_plot].max())
+        bin_edges = np.linspace(min_width, max_width, 11)  # 10 bins with equal width
+        return bin_edges
+
+def create_histogram_per_classes(s, histogram_to_plot, PNG_filenames):
+        try: # First this path is attempted to be executed
+                check_png_file_exists(PNG_filenames) # the function earlier created to check if the png file exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition.
+                bin_edges = set_bins_width(histogram_to_plot)
+                plt.subplot(4, 3, s)  # Creating a subplot for sepal length vs sepal width
+                setting_axis_limits()
+                plt.hist(setosa_df[histogram_to_plot], bins=bin_edges, color='violet')
                 plt.yticks([])
-                plt.xticks([])
+                plt.title('--------------------', fontsize = 20)
 
-                plt.subplot(4, 4, 4) # Creating plot for sepal width vs petal length
-                plt.scatter(setosa_petal_width, setosa_sepal_length, color='violet')
-                plt.scatter(versicolor_petal_width, versicolor_sepal_length, color='navy')
-                plt.scatter(virginica_petal_width, virginica_sepal_length, color='orange')
-                plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False)
+                plt.subplot(4, 3, s+1)  # Creating a subplot for sepal length vs sepal width
+                setting_axis_limits()
+                plt.hist(versicolor_df[histogram_to_plot], bins=bin_edges, color='navy')
+                plt.yticks([])
+                plt.title('Sepal Length (cm)', fontsize = 20)
+                
+                plt.subplot(4, 3, s+2)  # Creating a subplot for sepal length vs petal width  
+                setting_axis_limits()
+                plt.hist(virginica_df[histogram_to_plot], bins=bin_edges, color='orange')
                 plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-
-                plt.subplot(4, 4, 5) # Creating plot for sepal width vs petal width
-                plt.scatter(setosa_sepal_length, setosa_sepal_width, color='violet')
-                plt.scatter(versicolor_sepal_length, versicolor_sepal_width, color='navy')
-                plt.scatter(virginica_sepal_length, virginica_sepal_width, color='orange')
-                plt.xticks([])
-
-                plt.subplot(4, 4, 6) # Creating plot for petal length vs petal width
-                plt.figtext(.39, .59, 'Sepal\nWidth', ha='center', fontsize=22, fontstyle='italic') # creating text to enter in the sixth subplot. The x & y points are set for the location of the text. The alignment, size and style of the font is set.  
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.subplot(4, 4, 7)
-                plt.scatter( setosa_petal_length, setosa_sepal_width, color='violet')
-                plt.scatter( versicolor_petal_length, versicolor_sepal_width, color='navy')
-                plt.scatter( virginica_petal_length, virginica_sepal_width, color='orange')
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.subplot(4, 4, 8)
-                plt.scatter(setosa_petal_width, setosa_sepal_width, color='violet')
-                plt.scatter(versicolor_petal_width, versicolor_sepal_width, color='navy')
-                plt.scatter(virginica_petal_width, virginica_sepal_width, color='orange')
-                plt.xticks([])
-                plt.yticks([])
-
-                plt.subplot(4, 4, 9)
-                plt.scatter(setosa_sepal_length, setosa_petal_length, color='violet')
-                plt.scatter(versicolor_sepal_length, versicolor_petal_length, color='navy')
-                plt.scatter(virginica_sepal_length, virginica_petal_length, color='orange')
-                plt.xticks([])
-                plt.yticks([])
-
-                plt.subplot(4, 4, 10)
-                plt.scatter(setosa_sepal_width, setosa_petal_length, color='violet')
-                plt.scatter(versicolor_sepal_width, versicolor_petal_length, color='navy')
-                plt.scatter(virginica_sepal_width, virginica_petal_length, color='orange')
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.subplot(4, 4, 11)
-                plt.figtext(.63, .35, 'Petal\nLength', ha='center', fontsize=22, fontstyle='italic') # creating text to enter in the eleventh subplot. The x & y points are set for the location of the text. The alignment, size and style of the font is set.  
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.subplot(4, 4, 12)
-                plt.scatter(setosa_petal_width, setosa_petal_length, color='violet')
-                plt.scatter(versicolor_petal_width, versicolor_petal_length, color='navy')
-                plt.scatter(virginica_petal_width, virginica_petal_length, color='orange')
-                plt.xticks([])
-                plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-
-                plt.subplot(4, 4, 13)
-                plt.scatter(setosa_sepal_length, setosa_petal_width, color='violet')
-                plt.scatter(versicolor_sepal_length, versicolor_petal_width, color='navy')
-                plt.scatter(virginica_sepal_length, virginica_petal_width, color='orange')
-
-                plt.subplot(4, 4, 14)
-                plt.scatter(setosa_sepal_width, setosa_petal_width, color='violet')
-                plt.scatter(versicolor_sepal_width, versicolor_petal_width, color='navy')
-                plt.scatter(virginica_sepal_width, virginica_petal_width, color='orange')
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.subplot(4, 4, 15)
-                plt.scatter(setosa_petal_length, setosa_petal_width, color='violet')
-                plt.scatter(versicolor_petal_length, versicolor_petal_width, color='navy')
-                plt.scatter(virginica_petal_length, virginica_petal_width, color='orange')
-                plt.yticks([])
-
-                plt.subplot(4, 4, 16) 
-                plt.figtext(.86, .12, 'Petal\nWidth', ha='center', fontsize=22, fontstyle='italic') # creating text to enter in the sixteenth subplot. The x & y points are set for the location of the text. The alignment, size and style of the font is set.  
-                plt.yticks([])
-                plt.xticks([])
-
-                plt.tight_layout() 
-                plt.suptitle('All variables', y=1.08, fontsize=32) # adding a title to the figure, setting the location on the y axis and also setting the font size
-                plt.figlegend(loc = "upper center", ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14) # creating one legend for the subplots and setting it's location to the top center for the plot and spreading it into 3 columns
-                plt.savefig(PNG_filenames, bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust to fit the whole figure
-                print(f'Scatter plot {PNG_filenames} created.\n') # printing the confirmation for a histograms creation 
-        
+                plt.title('--------------------', fontsize = 20)
+                if s+2 == 12:
+                        plt.tight_layout()
+                        plt.suptitle('Histograms per class', y=1.08, fontsize=32)
+                        plt.figlegend(loc = "upper center", ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14, labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top center for the plot
+                        plt.savefig(PNG_filenames, bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust the title
         except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
                 print(f'Error: Filename {PNG_filenames} already exists in folder.\n') # printing the error that the histogram already exists
 
@@ -186,22 +166,6 @@ df = pd.read_csv('iris_data.csv')
 setosa_df = df[df['class'] == 'Iris-setosa']
 versicolor_df = df[df['class'] == 'Iris-versicolor']
 virginica_df = df[df['class'] == 'Iris-virginica']
-
-# Setting variables for comparison across the classes  which will be used for the subplots on the scatter plot
-setosa_sepal_length = setosa_df['sepal length (cm)'].to_numpy()
-setosa_sepal_width = setosa_df['sepal width (cm)'].to_numpy()
-setosa_petal_length = setosa_df['petal length (cm)'].to_numpy()
-setosa_petal_width = setosa_df['petal width (cm)'].to_numpy()
-
-versicolor_sepal_length = versicolor_df['sepal length (cm)'].to_numpy()
-versicolor_sepal_width = versicolor_df['sepal width (cm)'].to_numpy()
-versicolor_petal_length = versicolor_df['petal length (cm)'].to_numpy()
-versicolor_petal_width = versicolor_df['petal width (cm)'].to_numpy()
-
-virginica_sepal_length = virginica_df['sepal length (cm)'].to_numpy()
-virginica_sepal_width = virginica_df['sepal width (cm)'].to_numpy()
-virginica_petal_length = virginica_df['petal length (cm)'].to_numpy()
-virginica_petal_width = virginica_df['petal width (cm)'].to_numpy()
 
 # Printing a summary of the numeric valyes of the dataset
 num_values = df.describe()
@@ -220,128 +184,24 @@ write_summary_file(FILENAME)
 for i, (variable_to_plot, PNG_filenames) in enumerate(variables_and_filenames.items()):
        create_histograms(PNG_filenames, variable_to_plot)
 
-PNG_filenames = '5_all_variables_scatter.png' # updates the PNG_filenames value so that the error catching function can be reused for the scatter plot.
+# Define lsit of variables to plot for x axis value and y axis value for scatter plot png
+x_variables_y_variables = [('',''), ('sepal width (cm)', 'sepal length (cm)'), ('petal length (cm)', 'sepal length (cm)'), ('petal width (cm)', 'sepal length (cm)'), ('sepal length (cm)', 'sepal width (cm)'), ('',''), ('petal length (cm)', 'sepal width (cm)'), ('petal width (cm)', 'sepal width (cm)'), ('sepal length (cm)','petal length (cm)'), ('sepal width (cm)', 'petal length (cm)'), ('',''), ('petal width (cm)', 'petal length (cm)'), ('sepal length (cm)', 'petal width (cm)'), ('sepal width (cm)', 'petal width (cm)'), ('petal length (cm)','petal width (cm)'), ('','')]
 
-scatter_all_variables(PNG_filenames)
+PNG_filenames = '5_all_variables_scatter.png'
+# Iterate over variables and filenames
+plt.figure(figsize=(9, 9)) # figure size is set to avoid the plot being overloaded
+for i, (x_variable, y_variable) in enumerate(x_variables_y_variables, start=1):
+       create_scatter_all_variables(x_variable, y_variable, PNG_filenames)
 
-#####################################################################################
-#    Idea for new plot > decide if there is anything insightful from the visual     #
-#####################################################################################
+print(f'Scatter plot {PNG_filenames} created.\n') # printing the confirmation for a histograms creation 
 
-def setting_axis_limits(ymin, ymax): # function to overwrite the range automatically populated for plots and instead use set values for ranges for the x and y axis 
-    plt.ylim(ymin, ymax) # setting min and max values for the y axis 
-    #plt.xlim(xmin, xmax) # setting the min and max values for the y axis
+histograms_to_plot = ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
+s=1
+PNG_filenames = '6_classes_histogram.png'
+plt.figure(figsize=(9, 12)) # figure size is set to avoid the plot being overloaded
+for i, (histogram_to_plot) in enumerate(histograms_to_plot, start=1):
+    create_histogram_per_classes(s, histogram_to_plot, PNG_filenames)
+    s += 3
 
-def set_bins_width(histogram_to_plot):
-        # Compute the bin edges based on the overall range of petal widths
-        min_width = min(setosa_df[histogram_to_plot].min(), versicolor_df[histogram_to_plot].min(), virginica_df[histogram_to_plot].min())
-        max_width = max(setosa_df[histogram_to_plot].max(), versicolor_df[histogram_to_plot].max(), virginica_df[histogram_to_plot].max())
-        bin_edges = np.linspace(min_width, max_width, 11)  # 10 bins with equal width
-        return bin_edges
+print(f'Multiplot of histograms {PNG_filenames} created.\n') # printing the confirmation for a histograms creation 
 
-histogram_to_plot = 'sepal length (cm)'
-# Compute the bin edges
-bin_edges = set_bins_width(histogram_to_plot)
-# Additional plot of histograms looking at individual species alone
-
-# Setting variables for comparison across the species which will be used for the subplots
-# sepal length vs sepal width, sepal length vs petal length, sepal length vs petal width
-# sepal width vs petal length, sepal width vs petal width
-# petal length vs petal width
-# petal width
-plt.figure(figsize=(9, 12))
-plt.subplots_adjust(top=1)
-
-ymin = 0
-ymax = 19.5
-set_bins_width(histogram_to_plot)
-plt.subplot(4, 3, 1)  # Creating a subplot for sepal length vs sepal width
-setting_axis_limits(ymin, ymax)
-plt.hist(setosa_sepal_length, bins=bin_edges, color='violet')
-plt.yticks([])
-plt.title('--------------------', fontsize = 20)
-
-plt.subplot(4, 3, 2)  # Creating a subplot for sepal length vs petal length
-setting_axis_limits(ymin, ymax)
-plt.hist(versicolor_sepal_length, bins=bin_edges, color='navy')
-plt.yticks([])
-plt.title('Sepal Length (cm)', fontsize = 20)
-
-plt.subplot(4, 3, 3)  # Creating a subplot for sepal length vs petal width
-setting_axis_limits(ymin, ymax)
-plt.hist(virginica_sepal_length, bins=bin_edges, color='orange')
-plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-plt.title('--------------------', fontsize = 20)
-
-ymax = 16.5
-histogram_to_plot = 'sepal width (cm)'
-# Compute the bin edges
-bin_edges = set_bins_width(histogram_to_plot)
-plt.subplot(4, 3, 4) # Creating plot for sepal width vs petal length
-setting_axis_limits(ymin, ymax)
-plt.hist(setosa_sepal_width, bins=bin_edges, color='violet', label='Setosa')
-plt.title('--------------------', fontsize = 20)
-plt.yticks([])
-
-plt.subplot(4, 3, 5) # Creating plot for sepal width vs petal width
-setting_axis_limits(ymin, ymax)
-plt.hist(versicolor_sepal_width, bins=bin_edges, color='navy', label='Versicolor')
-plt.yticks([])
-plt.title('Sepal Width (cm)', fontsize = 20)
-
-plt.subplot(4, 3, 6) # Creating plot for petal length vs petal width
-setting_axis_limits(ymin, ymax)
-plt.hist(virginica_sepal_width, bins=bin_edges, color='orange', label='Virginica')
-plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-plt.title('--------------------', fontsize = 20)
-
-ymax = 38
-histogram_to_plot = 'petal length (cm)'
-# Compute the bin edges
-bin_edges = set_bins_width(histogram_to_plot)
-# Compute the bin edges based on the overall range of petal widths
-
-plt.subplot(4, 3, 7) 
-setting_axis_limits(ymin, ymax)
-plt.hist(setosa_petal_length, bins=bin_edges, color='violet')
-plt.yticks([])
-plt.title('--------------------', fontsize = 20)
-
-plt.subplot(4, 3, 8)
-setting_axis_limits(ymin, ymax)
-plt.hist(versicolor_petal_length, bins=bin_edges, color='navy')
-plt.yticks([])
-plt.title('Petal Length (cm)', fontsize = 20)
-
-plt.subplot(4, 3, 9)
-setting_axis_limits(ymin, ymax)
-plt.hist(virginica_petal_length, bins=bin_edges, color='orange')
-plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-plt.title('--------------------', fontsize = 20)
-
-ymax = 42
-histogram_to_plot = 'petal width (cm)'
-bin_edges = set_bins_width(histogram_to_plot)
-plt.subplot(4, 3, 10)
-setting_axis_limits(ymin, ymax)
-plt.hist(setosa_petal_width, bins=bin_edges, color='violet')
-plt.title('--------------------', fontsize = 20)
-plt.yticks([])
-
-plt.subplot(4, 3, 11)
-setting_axis_limits(ymin, ymax)
-plt.hist(versicolor_petal_width, bins=bin_edges, color='navy')
-plt.yticks([])
-plt.title('Petal Width (cm)', fontsize = 20)
-
-plt.subplot(4, 3, 12)
-setting_axis_limits(ymin, ymax)
-plt.hist(virginica_petal_width, bins=bin_edges, color='orange',)
-# Adjusting ticks on y-axis
-plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
-plt.title('--------------------', fontsize = 20)
-
-plt.tight_layout()
-plt.suptitle('Histograms per class', y=1.08, fontsize=32)
-plt.figlegend(loc = "upper center", ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14) # creating one legend for the subplots and setting it's location to the top center for the plot
-plt.savefig("6_classes_histogram.png", bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust the title
