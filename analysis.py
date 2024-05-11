@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from tabulate import tabulate as tb
 
 # Setting filename for text file to be reused later in the code.
 FILENAME = 'IRIS_Summary.txt'
@@ -17,15 +18,41 @@ def check_png_file_exists(PNG_filenames): # creating a function which will check
     if os.path.exists(PNG_filenames): # using OS library the value set in "PNG_filenames" is used to check if the file is already existing 
         raise FileExistsError # if the file exists the FileExists Error is thrown
 
-def write_summary_file(FILENAME): # creating a function which will create the text file when called.
+def write_summary_file(FILENAME, x_variables_y_variables): # creating a function which will create the text file when called.
         try: # first the new text file is attempted to be created 
-                with open(FILENAME, 'x') as f: # "x" creates the new text file and the FILENAME variable defined at the beginning of the main code block is used to name the file.
-                        f.write(str(intro)) # writing as .txt means the answer must be cast to a string to store
-                        f.write(str(num_values)) # writing as .txt means the answer must be cast to a string to store
-                        
+                with open(FILENAME, 'x', encoding='utf-8') as f: # "x" creates the new text file and the FILENAME variable defined at the beginning of the main code block is used to name the file.
+                        # Printing a summary of the numeric valyes of the dataset
+                        num_values = df.describe()
+                        length_df = len(df) # checking the number of entries in the dataset
+                        data_types = df.dtypes
                         count_class = df["class"].value_counts() # getting the count of the entries in the dataset per class of Iris
-                        f.write(str(f'\n\n{count_class}')) # writing the count of the classes to the text file
-                        print (f'\nSummary {FILENAME} created.\n') # not to user that the file has been created
+                        intro = (f'\t\t\t\t\t\t**** The IRIS dataset ****\n\nCreated in 1936, the Iris dataset is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nThe dataset consists of measurements for 3 different classes (Setosa, Versicolor and Virginica) of Iris flowers. The number of rows in the dataset is {length_df}, meaning the we have the information for 150 Iris flowers tracked. To see how many entries are tracked per class of Iris we can use the value_count method.\n\n\t{count_class}.\n\nFrom the above we can see there are 50 entries per class detailed in the dataset, so each class accounts for a third of the entries in the dataset. As the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length, sepal width, petal length and petal width. These four variables are numeric values and looking at the raw data we can see decimal places are present. With this, the data type used for this variables will be float. We can check this easily using pandas in python.\n\nVariable:\t\tData type:\n{data_types}\n\nFrom the above we can see that the data type for the numerical variables is in fact a float. For the class variable we can see object is stated. Within pandas the object data type is the most general data type and can hold any Python objects including strings.\n\nNext we will generate some statistical information which will be analysed in the README.ipynb in further details.\n\n{num_values}\n')
+
+                        f.write(str(intro)) # writing as .txt means the answer must be cast to a string to store
+
+                        correlations = {}
+                        species_dfs_to_use = {'All classes -': df,'Setosa -': setosa_df, 'Virginica -': virginica_df, 'Versicolor -': versicolor_df}
+
+                        for (species_df_name) in (species_dfs_to_use):
+                                for i, (x_variable, y_variable) in enumerate(x_variables_y_variables, start=1):
+                                        if i in [2, 3, 4, 7, 8, 12]:
+                                                corr_calculated = float(species_dfs_to_use[species_df_name][x_variable].corr(species_dfs_to_use[species_df_name][y_variable]))
+                                                name = (f'{species_df_name} {x_variable} vs {y_variable}')
+                                                correlations[name] = corr_calculated
+
+                        table = [ # creating a table which will show the calculated correlation coefficient overall for the entire DF then breaking it down per class of Iris too see how the class of Iris effects the correlation coefficient for a pair of variables
+                        ['Correlation\ncoefficient','Sepal Width\nvs.    \nSepal Length','Petal Length\nvs.    \nSepal Length','Petal Width\nvs.    \nSepal Length','Petal Length\nvs.    \nSepal Width','Petal Width\nvs.    \nSepal Width','Petal Width\nvs.    \nPetal Length'],
+                        ['All classes', correlations['All classes - sepal width vs sepal length'], correlations['All classes - petal length vs sepal length'], correlations['All classes - petal width vs sepal length'], correlations['All classes - petal length vs sepal width'], correlations['All classes - petal width vs sepal width'], correlations['All classes - petal width vs petal length']],
+                        ['Setosa', correlations['Setosa - sepal width vs sepal length'], correlations['Setosa - petal length vs sepal length'], correlations['Setosa - petal width vs sepal length'], correlations['Setosa - petal length vs sepal width'], correlations['Setosa - petal width vs sepal width'], correlations['Setosa - petal width vs petal length']],
+                        ['Virginica', correlations['Virginica - sepal width vs sepal length'], correlations['Virginica - petal length vs sepal length'], correlations['Virginica - petal width vs sepal length'], correlations['Virginica - petal length vs sepal width'], correlations['Virginica - petal width vs sepal width'], correlations['Virginica - petal width vs petal length']],
+                        ['Versicolor', correlations['Versicolor - sepal width vs sepal length'], correlations['Versicolor - petal length vs sepal length'], correlations['Versicolor - petal width vs sepal length'], correlations['Versicolor - petal length vs sepal width'], correlations['Versicolor - petal width vs sepal width'], correlations['Versicolor - petal width vs petal length']]
+                        ]
+
+                        table_to_print = tb(table, headers='firstrow', tablefmt='fancy_grid')
+                        
+                        f.write(str(f'\nCorrelation per pair of variables:\n'))
+                        f.write(table_to_print)
+
         except FileExistsError: # if the file exists when it is attempted to use "x" to create the file then a FileExistsError is thrown
                 print (f'\nError: Filename {FILENAME} already exists in folder.\n') # This message will be printed to the user if the FileExistsError is triggered  
 
@@ -151,32 +178,37 @@ def create_histogram_per_classes(s, variable_to_plot, PNG_filenames):
                 print(f'{PNG_filenames} created.\n') # printing the confirmation for a histograms creation
 
 # fetching data from csv file
-df = pd.read_csv('iris_data.csv')
+original_df = pd.read_csv('iris_data.csv')
+# Tidying up the dataset so that it is the items printed to the summary file are more readable, i.e. the output of df.describe() would be split due to the length of the column headers
+ 
+# Checking the original df for " (cm)" and deleting it
+original_df.columns = original_df.columns.str.replace(" (cm)", "")
+
+# Saving modified DataFrame back to a new CSV file so that we can use the tidied information for the plots.
+original_df.to_csv("modified_iris.csv", index=False)
+
+df = pd.read_csv('modified_iris.csv')
 
 # Filtering the dataset based on class to be able to differeniate in plots later in the program
 setosa_df = df[df['class'] == 'Iris-setosa']
 versicolor_df = df[df['class'] == 'Iris-versicolor']
 virginica_df = df[df['class'] == 'Iris-virginica']
 
-# Printing a summary of the numeric valyes of the dataset
-num_values = df.describe()
-intro = (f'The IRIS dataset, created in 1936, is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nSpecies:\n\tThe dataset consists of measurements for 3 different classes (Setosa, Versicolor and Virginica) of Iris flowers.\nThere are 50 entries per class detailed in the dataset.\nAs the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length (cm), sepal width (cm), petal length (cm) and petal width (cm)\nThese four variables are numeric values and looking at the raw data we can see decimal places are present.\nWith this, the data type used for this variables will be float.\n\n')
+# Defining lsit of variables to plot for x axis value and y axis value for scatter plot png
+x_variables_y_variables = [('',''), ('sepal width', 'sepal length'), ('petal length', 'sepal length'), ('petal width', 'sepal length'), ('sepal length', 'sepal width'), ('',''), ('petal length', 'sepal width'), ('petal width', 'sepal width'), ('sepal length','petal length'), ('sepal width', 'petal length'), ('',''), ('petal width', 'petal length'), ('sepal length', 'petal width'), ('sepal width', 'petal width'), ('petal length','petal width'), ('','')]
 
-# Define dictionary of variables to plot for histograms and filenames for the individual histogram pngs
+# Defining dictionary of variables to plot for histograms and filenames for the individual histogram pngs
 variables_and_filenames = {
-    'sepal length (cm)': '1_sepal_length_hist.png',
-    'sepal width (cm)': '2_sepal_width_hist.png',
-    'petal length (cm)': '3_petal_length_hist.png',
-    'petal width (cm)': '4_petal_width_hist.png'}
+    'sepal length': '1_sepal_length_hist.png',
+    'sepal width': '2_sepal_width_hist.png',
+    'petal length': '3_petal_length_hist.png',
+    'petal width': '4_petal_width_hist.png'}
 
-write_summary_file(FILENAME)
- 
+write_summary_file(FILENAME, x_variables_y_variables)
+
 # Iterate over variables and filenames
 for i, (variable_to_plot, PNG_filenames) in enumerate(variables_and_filenames.items()):
        create_histograms(PNG_filenames, variable_to_plot)
-
-# Define lsit of variables to plot for x axis value and y axis value for scatter plot png
-x_variables_y_variables = [('',''), ('sepal width (cm)', 'sepal length (cm)'), ('petal length (cm)', 'sepal length (cm)'), ('petal width (cm)', 'sepal length (cm)'), ('sepal length (cm)', 'sepal width (cm)'), ('',''), ('petal length (cm)', 'sepal width (cm)'), ('petal width (cm)', 'sepal width (cm)'), ('sepal length (cm)','petal length (cm)'), ('sepal width (cm)', 'petal length (cm)'), ('',''), ('petal width (cm)', 'petal length (cm)'), ('sepal length (cm)', 'petal width (cm)'), ('sepal width (cm)', 'petal width (cm)'), ('petal length (cm)','petal width (cm)'), ('','')]
 
 PNG_filenames = '5_all_variables_scatter.png'
 # Iterate over variables and filenames
