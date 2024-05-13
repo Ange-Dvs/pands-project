@@ -69,7 +69,7 @@ def create_histograms(variables_and_filenames): # creating a function which can 
                         plt.title('All classes of Iris together') # adding the title to the first subplot
 
                         plt.subplot(1, 2, 2) # plotting the subplot to be placed in the second column
-                        all_sepal_lengths = [setosa_df[variable_to_plot], versicolor_df[variable_to_plot], virginica_df[variable_to_plot]] # using the filtered datasets to select the information per class of Iris to enable colour coding of the histogram per class
+                        all_sepal_lengths = [df[df['class'] == 'Iris-setosa'][variable_to_plot], df[df['class'] == 'Iris-versicolor'][variable_to_plot], df[df['class'] == 'Iris-virginica'][variable_to_plot]] # using the filtered datasets to select the information per class of Iris to enable colour coding of the histogram per class
 
                         plt.hist(all_sepal_lengths, # plotting the histogram showing the the breakdown per class of Iris colour coded
                                 stacked=True, # stacked enables stacking the data into neat columns with the species showing in a towered way on top of each other 
@@ -97,9 +97,9 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
         PNG_filenames = 'scatter_all_variables.png'
         plt.figure(figsize=(9, 9)) # figure size is set to avoid the plot being overloaded
         # Iterate over variables and filenames
-        for i, (x_value, y_value) in enumerate(xy_value, start=1):
-                try: 
-                        check_png_file_exists(PNG_filenames) # the function earlier created to check if the png file exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition.
+        try: 
+                check_png_file_exists(PNG_filenames) # the function earlier created to check if the png file exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition.
+                for i, (x_value, y_value) in enumerate(xy_value, start=1):
                         if i in (1, 6, 11, 16): # if the value for i matches any defined in teh condition this path will be triggered by the program
                                 plt.subplot(4,4,i) # creating the subplots for the two variables passed each loop using value assigned for i to set the position of the subplot
                                 # removing x & y ticks
@@ -123,13 +123,13 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
                                 plt.subplot(4,4,i) # creating the subplots for the two variables passed each loop using value assigned for i to set the position of the subplot
                                 for class_name, class_df in dfs_to_use.items(): # assigning the colour to use for the markers depending on the class name used for the loop also creating the scatter plot provided the class name is not 'All classes -'
                                         if class_name == 'Setosa -':
-                                               marker_colour = 'violet'
+                                                marker_colour = 'violet'
                                         elif class_name == 'Versicolor -':
-                                               marker_colour = 'navy'
+                                                marker_colour = 'navy'
                                         elif class_name == 'Virginica -':
                                                 marker_colour = 'orange'
                                         else: # to catch any other values
-                                               marker_colour = 'black'
+                                                marker_colour = 'black'
                                         
                                         if class_name != 'All classes -': # ensuring only the filtered numbers for the datasets per class are used in the scatter plot
                                                 plt.scatter(class_df[x_value], class_df[y_value], color= marker_colour) # creating the scatter plot
@@ -151,9 +151,9 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
                                                 plt.xticks([])
                                         elif i == 15: # removing y ticks
                                                 plt.yticks([])
-                
-                except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
-                    print(f'Error: Filename {PNG_filenames} already exists in folder.\n') # printing the error that the histogram already exists
+        
+        except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
+                print(f'Error: Filename {PNG_filenames} already exists in folder.\n') # printing the error that the histogram already exists
 
 def setting_axis_limits(s): # creating a function which will set the range for the y axis
     ymin = 0 # 0 always the min
@@ -224,17 +224,12 @@ else:
         original_df.to_csv('modified_iris_data.csv', index=False)
         print('\nmodified_iris_data.csv created\n')
 
-df = pd.read_csv('modified_iris_data.csv') # fetching data from csv file
-
-# Filtering the dataset based on class to be able to differeniate in plots later in the program
-setosa_df = df[df['class'] == 'Iris-setosa']
-versicolor_df = df[df['class'] == 'Iris-versicolor']
-virginica_df = df[df['class'] == 'Iris-virginica']
+df = pd.read_csv('modified_iris_data.csv') # fetching data from the new tidied csv file
 
 # Defining lsit of variables to plot for x axis value and y axis value for scatter plot png
 xy_value = [('',''), ('sepal width', 'sepal length'), ('petal length', 'sepal length'), ('petal width', 'sepal length'), ('sepal length', 'sepal width'), ('',''), ('petal length', 'sepal width'), ('petal width', 'sepal width'), ('sepal length','petal length'), ('sepal width', 'petal length'), ('',''), ('petal width', 'petal length'), ('sepal length', 'petal width'), ('sepal width', 'petal width'), ('petal length','petal width'), ('','')]
 
-dfs_to_use = {'All classes -': df,'Setosa -': setosa_df, 'Versicolor -': versicolor_df, 'Virginica -': virginica_df} # setting keypairs to be used for the loop when calculating the correlation coefficient. The df will then be possible to call using the value in the name
+dfs_to_use = {'All classes -': df,'Setosa -': df[df['class'] == 'Iris-setosa'], 'Versicolor -': df[df['class'] == 'Iris-versicolor'], 'Virginica -': df[df['class'] == 'Iris-virginica']} # setting keypairs to be used for the loop when calculating the correlation coefficient. The df will then be possible to call using the value set as the name. It also filters the dataset based on class to be able to differeniate in plots later in the program
 
 # Defining dictionary of variables to plot for histograms and filenames for the individual histogram pngs
 variables_and_filenames = {
