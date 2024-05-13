@@ -25,15 +25,14 @@ def write_summary_file(xy_value, dfs_to_use): # creating a function which will c
                 with open(text_file_name, 'x', encoding='utf-8') as f: # "x" creates a new text file and the text_file_name variable defined at the beginning of the main code block is used to name the file. UTF-8 encoding is used to allow the table generated using tabulate to be added to the text file 
                         num_values = df.describe() # getting a summary of the numberical values for  the entire dataset using .describe()
                         # filtering the data by the class and getting a summary of the numerical variables
-                        setosa_info = setosa_df.describe()
-                        versicolor_info = versicolor_df.describe()
-                        virginica_info = virginica_df.describe()
+                        setosa_info = df[df['class'] == 'Iris-setosa'].describe()
+                        versicolor_info = df[df['class'] == 'Iris-versicolor'].describe()
+                        virginica_info = df[df['class'] == 'Iris-virginica'].describe()
                         length_df = len(df) # checking the number of entries in the dataset
                         data_types = df.dtypes # checking the data types of the variables in the dataset
                         count_class = df['class'].value_counts() # getting the count of the entries in the dataset per class of Iris
                         # setting the main text for the summary file using the variables defined above
                         intro = (f'\t\t\t\t\t\t**** The IRIS dataset ****\n\nCreated in 1936, the Iris dataset is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nThe dataset consists of measurements for 3 different classes (Setosa, Versicolor and Virginica) of Iris flowers. The number of rows in the dataset is {length_df}, meaning the we have the information for 150 Iris flowers tracked. To see how many entries are tracked per class of Iris we can use the value_count method.\n\n\t{count_class}.\n\nFrom the above we can see there are 50 entries per class detailed in the dataset, so each class accounts for a third of the entries in the dataset. As the classes variable are plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length, sepal width, petal length and petal width. These four variables are numeric values and looking at the raw data we can see decimal places are present. With this, the data type used for this variables will be float. We can check this easily using pandas in python.\n\nVariable:\t\tData type:\n{data_types}\n\nFrom the above we can see that the data type for the numerical variables is in fact a float. For the class variable we can see object is stated. Within pandas the object data type is the most general data type and can hold any Python objects including strings.\n\nNext we will generate some statistical information which will be analysed in the README.ipynb in further details.\n\nNumerical summary looking only of all classes together:\n{num_values}\n\nNumerical summary looking only at the Setosa class:\n{setosa_info}\n\nNumerical summary looking only at the Versicolor class:\n{versicolor_info}\n\nNumerical summary looking only at the Virginica class:\n{virginica_info}\n')
-
                         f.write(intro) # writing intro into the text file, since the intro is a string already it doesn't need to be cast as string before writing
 
                         correlations = {} # creating an empty dictionary to be used to store the calculated values for the correlation coefficient in the for loop below
