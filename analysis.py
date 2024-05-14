@@ -166,14 +166,14 @@ def setting_axis_limits(s): # creating a function which will set the range for t
         ymax = 42
     plt.ylim(ymin, ymax)# setting the range for the y axis in the plot
 
-def set_bins_width(variable_to_plot, dfs_to_use):
+def set_bins_width(variable_to_plot, df):
         # Setting the bin edges based on the overall range of the variables
-        min_width = min(df[variable_to_plot].min() for df in dfs_to_use.values()) # calculating the max width of the bins using the df_to_use dictionary for each value
-        max_width = max(df[variable_to_plot].max() for df in dfs_to_use.values()) # calculating the max width of the bins using the df_to_use dictionary for each value
-        bin_edges = np.linspace(min_width, max_width, 11) # defining 10 bins with equal width
+        min_width = df[variable_to_plot].min() # finding the min value for the variable passed in the loop in the dataset
+        max_width = df[variable_to_plot].max() # finding the max value for the variable passed in the loop in the dataset 
+        bin_edges = np.linspace(min_width, max_width, 11) # creating an array of 11 evenly spaced numbers within the range of the min and max values set to the min_width and max_width variable. This will ensure that each of the histogram has space for 10 evenly spaced bins within that entire range
         return bin_edges # returning the value of the bins
 
-def create_histogram_per_classes(variables_and_filenames, dfs_to_use):
+def create_histogram_per_classes(variables_and_filenames, dfs_to_use, df):
         PNG_filenames = 'hist_all_variables_per_species.png' # setting PNG filename to use
         try: # first this block of code will be attempted if FileExistsError is thrown program skips to the except code block
                 check_png_file_exists(PNG_filenames) # checking if the file exists
@@ -243,4 +243,4 @@ create_histograms(variables_and_filenames) # calling function to create the requ
 
 create_scatter_all_variables(xy_value, dfs_to_use) # calling function to create the scatter plot comparing all variables 
 
-create_histogram_per_classes(variables_and_filenames, dfs_to_use) # calling function which is creating a figure with all variables plotted to histograms filtered by class of Iris
+create_histogram_per_classes(variables_and_filenames, dfs_to_use, df) # calling function which is creating a figure with all variables plotted to histograms filtered by class of Iris
