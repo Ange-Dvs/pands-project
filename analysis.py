@@ -134,7 +134,7 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
                                                 plt.scatter(class_df[x_value], class_df[y_value], color= marker_colour) # creating the scatter plot
                                         
                                         # next the program will pass through one of the following conditions for further customization if the value for i is matching one defined for the path
-                                        if i in (3, 7, 8, 9, 10, 1): # removing of x and y ticks 
+                                        if i in (3, 7, 8, 9, 10, 14): # removing of x and y ticks 
                                                 plt.yticks([])
                                                 plt.xticks([])
                                         elif i == 2: # removing of y ticks and moving the x ticks to the top of the plot for easier readablity and to reflect every plot in that column
@@ -180,7 +180,7 @@ def create_histogram_per_classes(variables_and_filenames, dfs_to_use, df):
                 plt.figure(figsize=(9, 14)) # setting the figure size to ensure it is big enough to comfortably fit the subplots of the histograms
                 s = 1 # setting s initially as 1 to be used for the subplot number in the loops
                 for variable_to_plot in variables_and_filenames: # looping the code for each of the variables that need to be plotted in the variables and filenames dictionary
-                        bin_edges = set_bins_width(variable_to_plot, dfs_to_use) # calling the function to set the width of the bins
+                        bin_edges = set_bins_width(variable_to_plot, df) # calling the function to set the width of the bins
                         for i, (class_name, class_df) in enumerate(dfs_to_use.items(), start=1): # unpacking the dfs_to_use dictionary to set the class_df dynamically depending on the iteration of the loop
                                 if i != 1: # checking to ensure that i is not equals to 1 as we are not interested in the histogram of the entire dataset for this figure, only the individual classes
                                         plt.subplot(4, 3, s) # dynamically setting the subplot position using the value assigned to s
