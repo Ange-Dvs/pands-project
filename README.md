@@ -1,6 +1,11 @@
 # <font color='purple'>IRIS dataset </font>
 ***
 
+## Purpose: 
+
+This project aims to highlight some of the possibilities in Python for data visualisation using the Iris dataset. This README.md file will also dive into some of the observations from the information generated using the analysis.py program.  
+
+
 ## Summary of IRIS dataset:
 ***
 
@@ -38,15 +43,15 @@ With this, the data type used for this variables will be float.
         ![git pull](Images_for_readme/image-5.png)
 
 1. If the pull has been successful you should see 4 files pulled from GitHub
-        The .gitignore file, a csv file containing the dataset, the readme in the form of a Jupyter notebook and the analysis.py file which contains the program to run.  
-        ![files_in_repo](Images_for_readme/files.png)
+        The .gitignore file, a csv file containing the dataset, the readme.md (and a folder containing images used in the readme.md) and the analysis.py file which contains the program to run.  
+        ![Files in repository after successful pull](Images_for_readme/files.png)
 
 ## How to run *analysis.py*:
 ***
 
 1. To run the code open CMDER or the terminal in VS Code.
 1. Navigate to the folder where the repository is stored.
-1. Type ![triggering analysis.py to run](Images_for_readme/image-6.png) and hit enter. 
+1. Type ![Triggering analysis.py to run](Images_for_readme/image-6.png) and hit enter. 
 1. The python code should run and generate 8 files.
     - modified_iris_data.csv created
     - hist_sepal_length.png created.
@@ -56,7 +61,7 @@ With this, the data type used for this variables will be float.
     - scatter_all_variables.png created. 
     - hist_all_variables_per_species.png created. 
 1. If the code has run successfully you will see confirmation printed when each file is created.  
-        ![file confirmation messages](Images_for_readme/image-7.png)
+        ![File creation confirmation messages](Images_for_readme/image-7.png)
 
 ### Error handling within *analysis.py*:
 
@@ -64,7 +69,7 @@ Error handling is including in the code to ensure if a file is already existing 
 
 The error messages will look like this:  
 
-![error messages](Images_for_readme/image-8.png)
+![Example of error messages](Images_for_readme/image-8.png)
 
 If the error message for a file is returned that file will not be re-created or overwritten.
 If you want to rerun the code and create the files again, you'll need to delete the existing file or files first.    
@@ -97,7 +102,7 @@ To have a concise view of code for the generation of the different files the ord
 One function reused throughout the code is the check_png_file_exists() function.  
 This enables a error message to be returned to the user if the a filename for one of the generated plots is already existing
 
-![Check PNG file](Images_for_readme/image-10.png)
+![Checking if PNG file exists](Images_for_readme/image-10.png)
 
 The above function reads in the value passed for the PNG_filename variable allowing the functionality to be reused throughout the program for the creation of the multiple PNG files.  
 
@@ -107,9 +112,9 @@ The OS library is used to check if the path exists for the file and raises a Fil
 
 First we'll take a look at the function created for the creation of the summary file write_summary_file().
 
-![Create text file code](Images_for_readme/create_text_portrait2(1).png)
+![Code for creating text summary file](Images_for_readme/create_text_portrait2(1).png)
 
-#### Definition of variables and main text created for the text file
+<font size="4"><b>Definition of variables and main text created for the text file</b></font> 
 
 In the above, the FILENAME is first defined to be used for the error handling in case the file is already existing when the program attempts to create it.  
 
@@ -119,7 +124,7 @@ Within the step of creating the file the encoding is also set, UTF-8 is used to 
 
 The following lines include the definition of numerous variables to use in the intro file. This intro which includes the main bulk of text and a mathematical summary of the variables is then written to the text file. Next the program moves to code calculating the correlation coefficient and displaying it for the user in an easy to read view as a table.  
 
-#### Calculation of the correlation coefficient
+<font size="4"><b>Calculation of the correlation coefficient</b></font> 
 
 An empty dictionary is created to later store the calculated correlation of the pairs of variables. A dictionary called "dfs_to_use" and a list called "xy_values" are passed from outside the function for use in the calculation. These are used to create a loop to allow the correlation for the relevant pairs of variables to be generated dynamically using values passed from the list and dictionary, removing the need for repeated lines of code with the variables hardcoded.  
 
@@ -129,7 +134,7 @@ Next an if statement is set so that the calculation is only carried out for cert
 
 When the if statement condition is met, it is executed and the correlation is calculated using the class defined in the parent "for" loop and the x and y value defined in the second for loop. The name is then created using these values to allow for us to index into the dictionary when creating the table. The name and calculated correlation are then saved as a keypair to the correlations dictionary.
 
-#### Creation of the correlation coefficient table
+<font size="4"><b>Creation of the correlation coefficient table</b></font> 
 
 After all calculations are completed a list is created called "table" which contains 5 sub-lists, you can think of each list as representing a row in a table.   
 
@@ -137,9 +142,9 @@ The first row will be used to set the headers for the table using the string val
 
 The tabulate library is then used to take the "table" list and format it as a table, it is set to consider the first row to be headers and the fancy grid option for the formatting is used to make it more pleasant to read the table. The table is then written to the summary file and the code for writing the summary file within the function is finished.
 
-#### Looking at the lines within the main program of the code
+**Main Program Code Snippet**
 
-![Summary code in main block](Images_for_readme/create_text_portrait2(2).png)
+![Summary code in main block for creating text file](Images_for_readme/create_text_portrait2(2).png)
 
 To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the summary file the relevant components in the main code block can be seen above. 
 1. The xy_value list - used to set the variables which should be used for calculating the correlation coefficient
@@ -151,7 +156,7 @@ To make the program easily readable for the user the main code block outside of 
 
 The creation .png files showing the distribution of each variable via a histograms is the next functionality we'll go through.
 
-![Create_histograms](Images_for_readme/create_hist_portrait1(1).png)
+![Code for creating png with 2 histograms, one showing a variable overall and the second factoring the class](Images_for_readme/create_hist_portrait1(1).png)
 
 The function uses the keypair values from the variable_and_filenames dictionary.  
 
@@ -161,16 +166,16 @@ Next the creation of two plots is triggered, first a plot showing the data for t
 
 Next the histogram is created again for the subplot in the second position however this time the data is separated and colour coded per class of Iris to visualise the spread of distribution depending on the class for the variable. This is done using the "stacked" attribute to allow the data to be stacked on top of each other instead of treated as seperate columns. 
 
-#### Customizing the histograms
+<font size="4"><b>Customizing the histograms</b></font> 
 
 Along with the figure size being set, there are various settings defined for customizing the appearance of the histogram.
 The colour to be used for plotting the data per class is defined, the yticks are removed from the second subplot to avoid overcrowding of the figure as subplot 2 using the same range as the first subplot.  An overall title detailing the variable which is being plotted is added and the font side and position set. A shared label for the x axis is created using figtext since the plots share the same variable, the style, size and position of the text is defined. 
 
 Lastly the file is saved using the filename passed in from the dictionary and ensuring no data like the title is cut off using the bbox_inches attribute. A message is then printed to the user to inform them that the file has been created and providing the filename.
 
-#### Looking at the lines within the main block of code
+**Main Program Code Snippet**
 
-![hist_code_in_main](Images_for_readme/create_hist_portrait1(2).png)
+![Code in main block relevant for and triggering create_histogram function](Images_for_readme/create_hist_portrait1(2).png)
 
 To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the histogram file the relevant components in the main code block can be seen above. 
 1. The variables_and_filenames dictionary - used for passing the variable to plot in a loop to the function and the related filename to use when saving the figures.
@@ -179,35 +184,39 @@ To make the program easily readable for the user the main code block outside of 
 ### Creating the scatter plot
 ***
 
-![scatter_funct](Images_for_readme/create_scatter_landscape1.png)
-![scatter_funct_continued](Images_for_readme/create_scatter_landscape2(1).png)
+![Code showing function for creating scatter plot image 1](Images_for_readme/create_scatter_landscape1.png)
+![Code showing function for creating scatter plot image 2](Images_for_readme/create_scatter_landscape2(1).png)
 
 
 The function uses the tuples from the xy_value list to generate a figure containing 16 subplots.
 
 The try path is first attempted, using check_png_file_exists() function (explained earlier in the notebook) again, if it returns a FileExistsError the except path will be triggered. The filename and size of the figure for the png file is set to allow for the image to be large enough to comfortably fit the data in the image in an easily readable way to avoid potential overlap and ensure the plots are readable and not too small considering a large number of subplots are required to fit in the final figure.  
 
-#### Looping over the values to be used for x and y
+<font size="4"><b>Looping over the values to be used for x and y</b></font> 
+
 A for loop is also used in this function to iterate over the tuples in the list to reduce excess lines of code, setting the corresponding information in the tuple as the x and y value to be used in the plots, a counter is created as "i" with a starting value of 1 to allow the counter to be used to dynamically set the position of the subplot for each iteration later. 
 
-#### Creating empty plots & condition for saving the figure
+<font size="4"><b>Creating empty plots & condition for saving the figure</b></font> 
+
 An if statement checks if the iteration is matching one of the numbers in the condition, if it does the corresponding plots will not contain a scatter plot but instead an empty plot is generated. The figtext method is used to position the name of a variable within the boundaries of the empty plot, this is to reflect which variable is being used for the x axis in a column and the y axis in the row where that plot is located.  
 
 It also contains the logic to identify if the loop is in the last iteration to ensure the file is saved and the relevant steps which are only required to be completed once at the end are triggered. This includes the creation and positioning of the legend, the creation of the title for the figure and ensuring the layout is not overlapping. A message is also printed for the user at this stage in the loop to confirm the creation of the scatter plot .png file. 
 
-#### Creating subplots containing the scatter plot of each pair of variables
+<font size="4"><b>Creating subplots containing the scatter plot of each pair of variables</b></font> 
+
 The main else block contains the path all other iterations should take which involves actually creating scatterplots using the values contained in the tuples in the xy_value list. This block also includes a check for which class is being plotted and setting the corresponding colour depending on the class. 
 
 An if statement is also used to ensure that the data for the dataset as a whole is not plotted as the goal is to show the scatter plot with colours indicating which class is linked to each marker on the plot. If any of the individual classes are used for the iteration is it trigger the line of code responsible the creation of the scatter plot, the line is dynamic using the value for the class_df from the dfs_to_use diction and the x and y values are select using the tuples in the xy_value list for each iteration. 
 
-#### Customization of x and y ticks for specific subplots
+<font size="4"><b>Customization of x and y ticks for specific subplots</b></font>  
+
 As the requirements for customization of the plots varies depending on which position the subplot is located, a series of if elif statements are used to enhance the settings for the subplots depending on the iteration/subplot using the value of "i". The majority of the subplots require the removal of the x and y ticks, this is handled by the first if statement. 
 
 The next 5 elif statements contain the ability to remove the x or y ticks or move the x or y ticks depending on what is required for the plot. For example for the subplot in position 4, the x and y ticks are set to be placed on the opposite side of the plot. Instead of the x labels and ticks being on the bottom of the plot as per the default, they are set to be moved to the top of the plot. Similarly for the y axis the y labels and ticks are set to be placed on the right of the plot instead of the left. This is done to reflect that the same range is used for all of the values in that column and y values in the row, in the end aiming to reduce clutter in the image and make the plot easier to read for the user. 
 
-#### Looking at the main block of code
+**Main Program Code Snippet**
 
-![scatter_main_block](Images_for_readme/create_scatter_landscape2(2).png)
+![Code in main block relevant for and triggering create_scatter_all_variables function](Images_for_readme/create_scatter_landscape2(2).png)
 
 To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the scatter plot file the relevant components in the main code block can be seen above. 
 1. The xy_value list - used to set the variables for the x and y axis of each subplot depending on the iteration of the parent for loop within the function
@@ -216,8 +225,8 @@ To make the program easily readable for the user the main code block outside of 
 
 ### Creating figure containing histograms of each variable isolated per species
 
-![hist_all_pt1](Images_for_readme/create_hist_all_portrait1(1).png)
-![hist_all_pt2](Images_for_readme/create_hist_all_portrait1(2).png)
+![Code showing function for creating histogram of each variable seperated per class image 1](Images_for_readme/create_hist_all_portrait1(1).png)
+![Code showing function for creating histogram of each variable seperated per class image 2](Images_for_readme/create_hist_all_portrait1(2).png)
 
 Likewise with the other plots, a check is done to ensure the file is not already existing and informing the user if this is the case.  
 If the file is not existing already, the program continues the try path.  
@@ -261,14 +270,30 @@ The legend is generated and font size chosen. Using the "loc"  and "bbox_to_anch
 
 The file is then saved and the user is informed the file has been created using the value set as the PNG_filename at the beginning of the function.
 
-#### Looking at the main block of code
+**Main Program Code Snippet**
 
-![hist_all_main_block](Images_for_readme/create_hist_all_portrait1(3).png)
+![Code in main block relevant for and triggering hist of all varables seperated per class](Images_for_readme/create_hist_all_portrait1(3).png)
 
 To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the scatter plot file the relevant components in the main code block can be seen above. 
 1. The dfs_to_use dictionary - used for selecting which data to use in creation of the scatter plots, these values are also used for selecting the colour to be used in the loop for each class.
 1. The variables_and_filenames dictionary - used for passing the variable to plot in a loop to the function when creating the subplots.
 1. Line triggering the create_scatter_all_variables() - this calls the function to be initiated and passes the list and dictionary to the function to be used within the function itself.
+
+### Creating figure containing histograms of each variable for entire dataset
+
+![Code showing function for creating figure showing subplot of each variable using entire dataset](Images_for_readme/create_hist_overall_summary_l.png)
+
+Likewise with the other plots, a check is done to ensure the file is not already existing and informing the user if this is the case.  
+If the file is not existing already, the program continues the try path.  
+
+The size of the final figure is then set. A for loop is initiated with a counter "i" starting at 1. This counter is important as it will be used to dynamically set the subplot location depending on the iteration. The variable to plot is taken from the variable_and_filenames dictionary. This dictionary is also used as the bases for the for loop ensuring that each variable will be plotted. 
+To the a-axis of each suplot a label is added so that it is possible to identify which variable is being shown in a specific plot since each plot shows a different variable. 
+
+On the fourth iteration the loop completes extra one time steps like adding a title to the plot, also setting the location and font size for the title. Matplotlib.pyplot's tight_layout is used to adjust the space between the plots as needed. The file is then saved and a message returned to the user informing the file has been created and specifying the filename.
+
+**Main Program Code Snippet**
+
+![Code in main block relevant for and triggering hist_all_df_variables](Images_for_readme/create_hist_overall_summary_l2.png)
 
 ## Analysis of findings from analysis.py
 ***
@@ -281,9 +306,9 @@ Ideas for what to include for analysis :
 
 ### Correlation between variables 
 
-![calculated_correlation_table](Images_for_readme/Correlation_table.png)
+![Calculated correlation table](Images_for_readme/Correlation_table.png)
 
-#### Overall dataset:
+<font size="4"><b>Overall dataset:</b></font> 
 When looking at the calculated correlation between the variables using the entire dataset we can see that some pairs of variables appear to be strongly linked. 
 
 **Variables showing strong positive correlation**
@@ -311,7 +336,7 @@ The result is indicating an extremely week negative relationship between the two
 Next we'll factor in the class of Iris to see if the correlation between the variables differs depending on the class.
 
 
-#### Breakdown per species:
+<font size="4"><b>Breakdown per species:</b></font> 
 
 ##### *Setosa*
 
@@ -371,7 +396,7 @@ If we were to base our understand of the correlation of the variables bases sole
 
 #### Scatter plot analysis: 
 
-![Scatterplot](Images_for_readme/scatter_all_variables.png)
+![Scatterplot output](Images_for_readme/scatter_all_variables.png)
 
 Looking at the scatter plot above we can make some interesting observation. 
 
@@ -385,7 +410,7 @@ From the plots we can also see that of the classes, the Virginica class tends to
 
 #### Histogram analysis
 
-![hist_overall_sum](Images_for_readme/hist_variables_overview.png)
+![Histogram showing all variables using entire dataset](Images_for_readme/hist_variables_overview.png)
 
 Looking at the variables plotted for the dataset the data seems quite spread out.  
 
@@ -393,18 +418,83 @@ For petal width and sepal length the histogram appears to be multimodal with mor
 For petal length the histogram appears to be bimodal with two distinct peaks.  
 Then for sepal width this histogram appears to be unimodal.  
 
-Next we'll take a look at the histograms when the class of Iris is considered:
+Next we'll take a look at the histograms when the class of Iris is considered to see if this provides any further insight for the distribution of the variables.
 
-![hist_class_included](Images_for_readme/hist_class_included.png)
+![Histogram showing all variables overall and per class](Images_for_readme/hist_class_included.png)
+
+From the above we can see that the classes overlap for some variables more that other. With some variables sharing a lot of similarities in size and other having less overlap. 
+
+Next we'll take a look further into the different variables separately.
 
 ##### Petal length
 
-![image-4.png](attachment:image-4.png)  
-![image-2.png](attachment:image-2.png)
+![Histogram showing petal length overall and per class](Images_for_readme/hist_petal_length.png)  
 
-Setosa - very separated from the rest. Strong grouping between 1 - 1.5 (cm).  
-Versicolor - 0.469911 standard deviation relatively narrow range of deviation. 
-Histogram is not unimodal or symmetric. 3 peaks.
+When looking at the Petal length for the entire dataset as one we can see moderate variety in the data, with one peak completely separated from the remaining cluster. 
+
+From the summary file we identied that the standard deviation for the petal length is 1.76cm. Knowing the range is 1cm (min) to 6.9cm (max) we can interpret that that there is a moderate spread from the mean. From the text file we can also see that the mean is 3.76cm and looking at the plot above we see that this is one of the smaller bins in the histogram and we can also see the distribution is not uniform and there is a clear gap between two cluster groups in the histogram.
+
+Adding in the class a new perspective is shown across the dataset.  
+For the Setosa we can see these flowers are very separated from the rest with a strong grouping between 1 - 1.5 (cm). 
+
+For the Versicolor and Virginica we seem an overlap with these two classes having more similarities when it comes to their petal length.
+
+This shows us that the Setosa class are more easily distinguished from the remaining classes when it comes to petal length. We also see that the Virginica class are likely to be the longest of the petals while the Versicolor will fall somewhere in between.
+
+![Histogram showing petal length seperated per class](Images_for_readme/petal_length_per_class.png)
+
+Looking at the data isolated per graph we can see the distribution for the Versicolor and Virginica more clearly.  
+For Versicolor we can see the histogram is a unimodal struction, while not as severe as the Setosa, there is one peak. While Virginica we do not have as drastic of a difference between the bins. 
+
+##### Petal width
+
+![Histogram showing petal width overall and per class](Images_for_readme/hist_petal_width.png)
+
+Looking at the dataset as a whole together we see the histogram is multimodal with multiple peaks in the plot suggesting that there is a lot of variablity in petal widths across the Irises as a whole.
+
+Interestingly when we add the 3rd factor of class into the plot we can see that the three peaks show the main clusters for the individual classes. 
+
+![Histogram showing petal width seperated per class](Images_for_readme/petal_width_per_class.png)
+
+Similarily to the petal length, we see that the Setosa data is clustered to the smaller end of the x-axis between (0.1cm to 0.6cm), with this clear seperation the petal width or length could be a good candidate if trying to use the data to identify if an Iris is a Setosa.
+
+With the Versicolor and Virginica classes we see the again slight overlap in the ranges but lets look at the classes seperatly to get a clear picture. 
+
+We can see that that the histogram for the Versicolor class is unimodal with a clear peak in the distribution and again seems to lie in the middle Setosa and Virginica in terms of size.  
+The Virginica class appears to have again a less distinct peak and has more of a spread with the largest standard deviation of the group (0.27cm) and the largest petals in both length and width.
+
+##### Sepal length
+
+![Histogram showing sepal length overall and per class](Images_for_readme/hist_sepal_length.png)
+
+Moving next to the Sepal length again we see a multimodal histogram with the majority of the data clustered to the centre and left of the plot.  
+
+In contrast to the Petal length and width histograms we can seen in the sepal length there is much more of an overlap between the 3 species.  
+
+![Histogram showing sepal length seperated per class](Images_for_readme/sepal_length_per_class.png)
+
+When looking at the classes isolated with their own plots we can see that again the Setosa class is towards the smaller end of the plot with a single peak. When taking the petal width and length into consideration we can see that the Setosa data tends to be clustered closely and to the left of the plot. 
+
+The range for Versicolor, like for the petal width and length, appears to be in the middle of the Setosa and Virginica clusters. Virginica again seeming to contriubute mostly to the right end of the plot with larger sepal length. 
+
+##### Sepal Width 
+
+![Histogram showing sepal width overall and per class](Images_for_readme/hist_sepal_width.png)  
+
+When coming to the Sepal width we see that this histogram tends to seem to be the most fitting of the normal dsitribution label with one main peak around the mean (3.05cm).
+
+Like with the sepal width there is much more overlap between the classes versus the histograms of the petal length and width. 
+
+![Histogram showing sepal width seperated per class](Images_for_readme/sepal_width_per_class.png)
+
+In contrast to the other variables we see for the cluster for the Setosa class is located primarily on the right of the plot, making up the majority of the entries for the larger values recorded. 
+
+Versicolor in comparision is making up the left tail of the distribution with a shape most comparible to normal distribution comparing to the other two classes.  
+Like the Setosa class the Virginica data also is unimodal with one peak. 
+
+From looking at the sepal variables (width and length) we see for both that the ranges for the sepal characteristics tend to overlap more than that of the petal characteristics. 
+
+
 
 ### Additional resources/reading:
 ***
@@ -437,6 +527,8 @@ https://www.geeksforgeeks.org/python-dictionary-items-method/
 https://docs.python.org/3/library/stdtypes.html#dictionary-view-objects
 
 Inspiration for format of the scatter plot https://en.wikipedia.org/wiki/Iris_flower_data_set#/media/File:Iris_dataset_scatterplot.svg
+
+OS - https://docs.python.org/3/library/os.html
      
 ## Libraries within python
 ***
@@ -446,6 +538,7 @@ Within the program we are importing various external libraries and classes to us
 - Matplotlib.pyplot
 - NumPy
 - Tabulate
+- OS
 
 #### Pandas:
 Pandas[^] is a library in Python used for data analysis which enables the use of two-dimensional tables called DataFrames.  
@@ -491,6 +584,11 @@ NumPy is used in the *analysis.py* file to facilitate calculations on the large 
 Tabulate makes it possible to create formatted tables to present data from DataFrames and lists in a clear and concise way.  
 The table's appearance is customisable, with options to configure if the table has headers and if there are borders between the cells. [^]
 
+#### OS:
+The os library enables the ability to complete actions which require use of the operating system. 
+
+> os.path.exists - within the *analysis.py* program we see this functionality used for the error handling steps. Allowing the program to check first if a file is already existing before creating or overwriting the file. This is can be used to raise and error if the file is present to avoid files being corrupted or incorrectly overwritten. 
+
 ### Python core functionality: 
 
 In addition to the above functionality from the imported libraries, there is two honourable mentions for functionality within the standard Python environment which are key for the *analysis.py* file. 
@@ -501,60 +599,25 @@ In the case of analysis.py file it allows for the variable to be used to plot th
 > items() - Returns a view option that contains key-pair values in from a dictionary.   
 For *analysis.py* it is pulling the variable and png filename to be used with the enumerate function for the histogram loop.  It is also used to pull the information of the class name and respective filtered information from the dataset for the scatter plot and the large histogram of all variables separated per species.
 
+
+
+
 #### Next actions/To-do list:
-- ~~Create all code needed in this notebook first to enable easy checking of batches of code~~
-- ~~Decide if README will be a jupyter notebook or just .md file (Does readme file just get deleted if using Jupyter notebook?)~~
-- ~~Last review of code & generated plot to see if any further tidying up is needed~~
-- ~~Decide > do I want to include the calculation of standard deviation into the large figure with subplot of each of the variables in the image > no too crowded~~
-- Explanation of code: 
-    - ~~Decide if using screenshot or code directly in the notebook (if using notebook figure out how the code may need to be adjusted i.e. not saving the images when running the cells) > code directly~~
-    - ~~Create files of the different functionality separated to have all the related functions and code in one cell/screenshot~~
-    - ~~Remove comments from individual functionality files to make it easier to read to give high level explanation~~ 
-    - ~~Mention that line by line explanation of code is within the .py file~~
 - Start adding analysis and observation to the notebook.ipynb
 - Add extra analysis and commentary to accompany the plots in notebook
 - Add sources to notebook and any research/readings done for the project
 
 ### python file:
-- ~~Update python file after piece of code is validated~~
-    - ~~Add code which outputs a summary of each variable to single text file > point to consider: should I add breakdown information per species of the summary?~~ 
-    - ~~Add code to create histograms of each variables to png files~~
-    - ~~Add code to create s scatter plot of each pair of variables~~
-
-- ~~Create subplot which shows all variables against each other~~
-
-- ~~Ideas for improvement of the scatter plot:~~
-    - ~~Investigate if there is a way to make the variables to plot on x and y axis dynamic like with the histogram function created above using loop and enumerate~~
-    - ~~Think about how to handle customization:~~
-        - ~~Use if/elif/else in the loop to decide which customization to use depending on the subplot being plotted~~  
-            ~~i.e. if i=1 or 6 or 11 or 14 plot empty subplot so figtext can be added later for the variables~~  
-                ~~elif i=3,7,8,9,10,12 remove x and y ticks etc~~  
-    - ~~If I can get that working need to decide how to structure the main code, do I have functionality to create scatter in a function and use function within a function?~~
-
-- ~~Create histogram of each variable:~~  
-    - ~~Write code first which generates the histograms for each variable~~
-    - ~~Point to consider: Would it be interesting to created stacked histogram of the variables showing variables for the different species~~
-    - ~~Point to consider: Addition file showing subplot that would have 4 rows, 3 columns in each and show the individual histograms per class~~
-    - ~~Refactor code to make the final histogram plots neater.~~  
-    
-- ~~Enhance so that histograms are saved to seperate png files~~
-
-- ~~- Additional calculations:~~  
-    -  ~~Point to consider: Would it be interesting to include the calculations of correlation, standard deviation?~~  
-    - ~~Brainstorm any other insightful calculations that could be included~~
-
-- ~~Point to consider: Would it be a good idea to include error handling to first see if the file is already created and if so displaying a message to the user like "Filenames already existing in folder, no new files generated."~~
-
 - Spellcheck
+- Comments for the newest histogram code added
 
 ### README.md sections:
 
 - Research & summary of dataset  
-- ~~How to run code~~
-- ~~Cloning & Pulling GitHub~~
-- ~~Running on your machine~~
-- Explanation of what code does > in progress - need to be completed for large figure with histogram subplots. (Also think about adding more detail for the intro file like what the summary actually contains not just "numerical data")
+- Purpose of project
+- Explanation for newest histogram
 - Analysis of own findings (including comparison to findings of published studies or analysis online from others)
+- Conclusion 
 - Footnotes & additional reading section
 - Refactor notebook 
     - Spellcheck
