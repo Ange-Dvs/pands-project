@@ -39,7 +39,7 @@ With this, the data type used for this variables will be float.
 
 1. If the pull has been successful you should see 4 files pulled from GitHub
         The .gitignore file, a csv file containing the dataset, the readme in the form of a Jupyter notebook and the analysis.py file which contains the program to run.  
-        !!!!!! INSERT SCREENSHOT OF CLEAN REPO
+        ![files_in_repo](Images_for_readme/files.png)
 
 ## How to run *analysis.py*:
 ***
