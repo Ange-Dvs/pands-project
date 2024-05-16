@@ -209,7 +209,7 @@ The next 5 elif statements contain the ability to remove the x or y ticks or mov
 
 ![scatter_main_block](Images_for_readme/create_scatter_landscape2(2).png)
 
-To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the scatter plot file the relavant components in the main code block can be seen above. 
+To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the scatter plot file the relevant components in the main code block can be seen above. 
 1. The xy_value list - used to set the variables for the x and y axis of each subplot depending on the iteration of the parent for loop within the function
 1. The dfs_to_use dictionary - used for selecting which data to use in creation of the scatter plots, these values are also used for selecting the colour to be used in the loop for each class.
 1. Line triggering the create_scatter_all_variables() - this calls the function to be initiated and passes the list and dictionary to the function to be used within the function itself.
