@@ -224,6 +224,8 @@ def hist_all_df_all_variables(variables_and_filenames):
                                 plt.suptitle('All classes of Iris together', y=.98, fontsize=18) # adding the title to the first subplot
                                 plt.tight_layout()
                                 plt.savefig(PNG_filenames, bbox_inches='tight') # saving histograms as a PNG file with bbox_inches set to tight to avoid any text or info being cut from the figure
+                                print(f'{PNG_filenames} created.\n') # printing the confirmation for a histograms creation
+                                
         except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is followed
                 print(f'Error: Filename {PNG_filenames} already exists in folder.\n') # printing the error that the histogram already exists
 
