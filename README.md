@@ -1,12 +1,12 @@
 # <font color='purple'>IRIS dataset </font>
 ***
 
-## Purpose: 
+## Purpose
 
 This project aims to highlight some of the possibilities in Python for data visualisation using the Iris dataset. This README.md file will also dive into some of the observations from the information generated using the analysis.py program.  
 
 
-## Summary of IRIS dataset:
+## Summary of IRIS dataset
 ***
 
 The IRIS dataset, created in 1936, is a popular dataset commonly used for exploring data analysis and data visualisation.
@@ -14,7 +14,7 @@ The IRIS dataset, created in 1936, is a popular dataset commonly used for explor
 The dataset consists of measurements for 3 different species (setosa, versicolor and virginica) of Iris flowers.  
 There are 50 entries per species detailed in the dataset.
 
-### Species:
+<font size="3"><b>Species:</b></font> 
 |Setosa    |Versicolor | Virginica|
 |-----------|---------------|------------|
 |![Setosa](https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kosaciec_szczecinkowaty_Iris_setosa.jpg/180px-Kosaciec_szczecinkowaty_Iris_setosa.jpg)|![Versicolor](https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Iris_versicolor_3.jpg/320px-Iris_versicolor_3.jpg)|![Virginica](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Iris_virginica.jpg/295px-Iris_virginica.jpg)|
@@ -25,7 +25,7 @@ Four characteristics of the flowers were tracked including sepal length, sepal w
 These four variables are numeric values and looking at the raw data we can see decimal places are present. 
 With this, the data type used for this variables will be float.
 
-## Cloning repository from GitHub:
+## Cloning repository from GitHub
 ***
 
 1. Copy the following URL:  
@@ -46,7 +46,7 @@ With this, the data type used for this variables will be float.
         The .gitignore file, a csv file containing the dataset, the readme.md (and a folder containing images used in the readme.md) and the analysis.py file which contains the program to run.  
         ![Files in repository after successful pull](Images_for_readme/files.png)
 
-## How to run *analysis.py*:
+## How to run *analysis.py*
 ***
 
 1. To run the code open CMDER or the terminal in VS Code.
@@ -63,7 +63,7 @@ With this, the data type used for this variables will be float.
 1. If the code has run successfully you will see confirmation printed when each file is created.  
         ![File creation confirmation messages](Images_for_readme/image-7.png)
 
-### Error handling within *analysis.py*:
+### Error handling within *analysis.py*
 
 Error handling is including in the code to ensure if a file is already existing in the folder with the same filename the user will be informed.
 
@@ -74,7 +74,7 @@ The error messages will look like this:
 If the error message for a file is returned that file will not be re-created or overwritten.
 If you want to rerun the code and create the files again, you'll need to delete the existing file or files first.    
 
-## Walkthrough of *analysis.py* code:
+## Walkthrough of *analysis.py* code
 ***
 The next section of the notebook is a walkthrough of the contents of the analysis.py file.  
 While the functionality will be explained in this notebook, a line by line explanation of the code is contained within the analysis.py file itself.
@@ -153,36 +153,6 @@ To make the program easily readable for the user the main code block outside of 
 1. The dfs_to_use dictionary - used for selecting which data to use in the correlation calculations using first the data for the entire dataset and then separating the entries depending on class.
 1. Line triggering the write summary file - this calls the function to be initiated and passes the list and dictionary to the function to be used within the function itself. 
 
-### Creating Histograms
-***
-
-The creation .png files showing the distribution of each variable via a histograms is the next functionality we'll go through.
-
-![Code for creating png with 2 histograms, one showing a variable overall and the second factoring the class](Images_for_readme/create_hist_portrait1(1).png)
-
-The function uses the keypair values from the variable_and_filenames dictionary.  
-
-A for loop is used to iterate over the keypairs in the dictionary reducing unnecessary repetition of lines of code. The try path is first attempted, if the check_png_file_exists() function (explained earlier in the notebook) returns a FileExistsError the except path will be triggered. The size of the figure for the png file is set to allow for the image to be large enough to comfortably fit the data in the image in an easily readable way.
-
-Next the creation of two plots is triggered, first a plot showing the data for the variable in a given loop within the entire dataset, this is then plotted to the subplot in the first position. 
-
-Next the histogram is created again for the subplot in the second position however this time the data is separated and colour coded per class of Iris to visualise the spread of distribution depending on the class for the variable. This is done using the "stacked" attribute to allow the data to be stacked on top of each other instead of treated as seperate columns. 
-
-<font size="4"><b>Customizing the histograms</b></font> 
-
-Along with the figure size being set, there are various settings defined for customizing the appearance of the histogram.
-The colour to be used for plotting the data per class is defined, the yticks are removed from the second subplot to avoid overcrowding of the figure as subplot 2 using the same range as the first subplot.  An overall title detailing the variable which is being plotted is added and the font side and position set. A shared label for the x axis is created using figtext since the plots share the same variable, the style, size and position of the text is defined. 
-
-Lastly the file is saved using the filename passed in from the dictionary and ensuring no data like the title is cut off using the bbox_inches attribute. A message is then printed to the user to inform them that the file has been created and providing the filename.
-
-**Main Program Code Snippet**
-
-![Code in main block relevant for and triggering create_histogram function](Images_for_readme/create_hist_portrait1(2).png)
-
-To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the histogram file the relevant components in the main code block can be seen above. 
-1. The variables_and_filenames dictionary - used for passing the variable to plot in a loop to the function and the related filename to use when saving the figures.
-1. Line triggering the create_histograms() function - this calls the function to be initiated and passes the dictionary to the function to be used within the function itself. 
-
 ### Creating the scatter plot
 ***
 
@@ -225,7 +195,40 @@ To make the program easily readable for the user the main code block outside of 
 1. The dfs_to_use dictionary - used for selecting which data to use in creation of the scatter plots, these values are also used for selecting the colour to be used in the loop for each class.
 1. Line triggering the create_scatter_all_variables() - this calls the function to be initiated and passes the list and dictionary to the function to be used within the function itself.
 
-### Creating figure containing histograms of each variable isolated per species
+### Creating Histograms
+***
+The *analysis.py* code generates a number of histograms saved as .png file. The next section will walk through how this is done per type of image. 
+
+#### i. Creating histograms showing overall and class specific distribution per variable
+
+The creation .png files showing the distribution of each variable via a histograms is the next functionality we'll go through.
+
+![Code for creating png with 2 histograms, one showing a variable overall and the second factoring the class](Images_for_readme/create_hist_portrait1(1).png)
+
+The function uses the keypair values from the variable_and_filenames dictionary.  
+
+A for loop is used to iterate over the keypairs in the dictionary reducing unnecessary repetition of lines of code. The try path is first attempted, if the check_png_file_exists() function (explained earlier in the notebook) returns a FileExistsError the except path will be triggered. The size of the figure for the png file is set to allow for the image to be large enough to comfortably fit the data in the image in an easily readable way.
+
+Next the creation of two plots is triggered, first a plot showing the data for the variable in a given loop within the entire dataset, this is then plotted to the subplot in the first position. 
+
+Next the histogram is created again for the subplot in the second position however this time the data is separated and colour coded per class of Iris to visualise the spread of distribution depending on the class for the variable. This is done using the "stacked" attribute to allow the data to be stacked on top of each other instead of treated as seperate columns. 
+
+<font size="4"><b>Customizing the histograms</b></font> 
+
+Along with the figure size being set, there are various settings defined for customizing the appearance of the histogram.
+The colour to be used for plotting the data per class is defined, the yticks are removed from the second subplot to avoid overcrowding of the figure as subplot 2 using the same range as the first subplot.  An overall title detailing the variable which is being plotted is added and the font side and position set. A shared label for the x axis is created using figtext since the plots share the same variable, the style, size and position of the text is defined. 
+
+Lastly the file is saved using the filename passed in from the dictionary and ensuring no data like the title is cut off using the bbox_inches attribute. A message is then printed to the user to inform them that the file has been created and providing the filename.
+
+**Main Program Code Snippet**
+
+![Code in main block relevant for and triggering create_histogram function](Images_for_readme/create_hist_portrait1(2).png)
+
+To make the program easily readable for the user the main code block outside of the function is minimum, for the creation of the histogram file the relevant components in the main code block can be seen above. 
+1. The variables_and_filenames dictionary - used for passing the variable to plot in a loop to the function and the related filename to use when saving the figures.
+1. Line triggering the create_histograms() function - this calls the function to be initiated and passes the dictionary to the function to be used within the function itself. 
+
+### Creating histograms of each variable per species
 
 ![Code showing function for creating histogram of each variable seperated per class image 1](Images_for_readme/create_hist_all_portrait1(1).png)
 ![Code showing function for creating histogram of each variable seperated per class image 2](Images_for_readme/create_hist_all_portrait1(2).png)
@@ -281,7 +284,7 @@ To make the program easily readable for the user the main code block outside of 
 1. The variables_and_filenames dictionary - used for passing the variable to plot in a loop to the function when creating the subplots.
 1. Line triggering the create_scatter_all_variables() - this calls the function to be initiated and passes the list and dictionary to the function to be used within the function itself.
 
-### Creating figure containing histograms of each variable for entire dataset
+### Creating histograms for each variable for the entire dataset
 
 ![Code showing function for creating figure showing subplot of each variable using entire dataset](Images_for_readme/create_hist_overall_summary_l.png)
 
@@ -396,7 +399,7 @@ We can also see that each class of Iris has its pattern and relationship between
 This highlights the importance of understanding the complexity of the data in the dataset and the importance of considering underlying factors when interpreting the results.  
 If we were to base our understand of the correlation of the variables bases solely on the calculated correlation of the overall dataset combined it would be very easy to reach some incorrect conclusions.
 
-#### Scatter plot analysis: 
+### Scatter plot analysis
 
 ![Scatterplot output](Images_for_readme/scatter_all_variables.png)
 
@@ -410,7 +413,7 @@ In contrast the Petal length vs petal width may be a better candidate to use as 
 
 From the plots we can also see that of the classes, the Virginica class tends to have the widest and longest petals, with Setosa being much smaller in these respects.  
 
-#### Histogram analysis
+### Histogram analysis
 
 ![Histogram showing all variables using entire dataset](Images_for_readme/hist_variables_overview.png)
 
@@ -498,7 +501,7 @@ From looking at the sepal variables (width and length) we see for both that the 
 
 
 
-### Additional resources/reading:
+## Additional resources/reading
 ***
 Adding screenshots to Jupyter notebook
 https://medium.com/@yogeshkd/four-ways-to-embed-images-in-your-jupyter-notebook-powered-blog-2d28f6d1b6e6#:~:text=1.,command%20to%20embed%20the%20screenshot.
@@ -532,7 +535,7 @@ Inspiration for format of the scatter plot https://en.wikipedia.org/wiki/Iris_fl
 
 OS - https://docs.python.org/3/library/os.html
      
-## Libraries within python
+### Libraries within python
 ***
 
 Within the program we are importing various external libraries and classes to use throughout the notebook including: 
@@ -542,7 +545,7 @@ Within the program we are importing various external libraries and classes to us
 - Tabulate
 - OS
 
-#### Pandas:
+#### Pandas
 Pandas[^] is a library in Python used for data analysis which enables the use of two-dimensional tables called DataFrames.  
 Within the *analysis.py* file the Pandas library is used to read in the data from the Iris dataset.  
 The following are some methods used throughout the project from Pandas: 
@@ -552,7 +555,7 @@ The following are some methods used throughout the project from Pandas:
 
 > .std - used to calculate the standard deviation in the dataset to determine the spread of the values for a variable from the mean. [^]
 
-#### Matplotlib.pyplot:
+#### Matplotlib.pyplot
 The Matplotlib.pyplot library is used mainly for visual representation of the dataset.
 This library enables the creation of many types of plots including bar charts, histograms and scatter plot which are generated by the *analysis.py* file.  
 There is a high level of customisation possible with options to switch up the colour,[^] markers,[^] labels and titles of the plots.
@@ -586,12 +589,12 @@ NumPy is used in the *analysis.py* file to facilitate calculations on the large 
 Tabulate makes it possible to create formatted tables to present data from DataFrames and lists in a clear and concise way.  
 The table's appearance is customisable, with options to configure if the table has headers and if there are borders between the cells. [^]
 
-#### OS:
+#### OS
 The os library enables the ability to complete actions which require use of the operating system. 
 
 > os.path.exists - within the *analysis.py* program we see this functionality used for the error handling steps. Allowing the program to check first if a file is already existing before creating or overwriting the file. This is can be used to raise and error if the file is present to avoid files being corrupted or incorrectly overwritten. 
 
-### Python core functionality: 
+### Python core functionality
 
 In addition to the above functionality from the imported libraries, there is two honourable mentions for functionality within the standard Python environment which are key for the *analysis.py* file. 
 
