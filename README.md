@@ -99,6 +99,7 @@ To have a concise view of code for the generation of the different files the ord
 
 ### Error handling for PNG files
 
+
 One function reused throughout the code is the check_png_file_exists() function.  
 This enables a error message to be returned to the user if the a filename for one of the generated plots is already existing
 
@@ -109,6 +110,7 @@ The above function reads in the value passed for the PNG_filename variable allow
 The OS library is used to check if the path exists for the file and raises a FileExistsError in case the filename is present in the folder, which in turn triggers the except path of the code outside of the function.  
 
 ### Creating the summary file
+***
 
 First we'll take a look at the function created for the creation of the summary file write_summary_file().
 
@@ -236,12 +238,12 @@ A counter s is defined, this will be used to dynamically set the value for the s
 
 Next a for loop is defined with the purpose of cycling through the variables in the variable and filename dictionary. 
 
-#### Setting the bin width 
+<font size="4"><b>Setting the bin width</b></font>  
 In order to have the width of the bins in the histograms consistent for each of the classes individual histogram per variable, a function gets the minimum value in the dataset for a variable and sets that as the min width.  
 The same approach is carried out to find the max value, these two numbers are then used to generate an array of evenly spaced numbers using NumPy's linespace function.  
 This is then used to set the bin width for all histograms for that variable, when the loop changes to the next variable, the min and max value will be recalculated to get the appropriate range again for the columns width for the next iteration of the function.
 
-#### Customization of the histograms
+<font size="4"><b>Customization of the histograms</b></font>  
 After the set_bins_width() function is completed it returns that values to be used in the parent function.
 
 The next steps involves a for loop taking the values from the dfs_to_use list and sets them to the variables class_name and class_df.  
@@ -252,14 +254,14 @@ With this and if statement checks to ensure the plotting is only carried out for
 Depending on which subplot is being generated we set the colour to be used for the bins, either remove the y ticks or move them to the right hand side of the plot positioned in the last row of each column. A label is also added in these loops to show which variable is being plotted in the rows.  
 The title field is used to create a line break in between the rows to visualise the separation of the variables.
 
-#### Setting y axis range
+<font size="4"><b>Setting y axis range</b></font>  
 Next they y axis limits are set for the row of plots, a function sets the limits for the y range depending on the variable. i.e. all subplot in row 1 have the same y range defined so you can see the height of the columns and compare to the other subplots for the same variable.
 
 In this function the min for y axis is set to 0 for all plots in the figure. An if statement branches out to decide what the max should be for the axis depending on the subplot being created using the value for the iteration counter. 
 
 The y axis range is then set for the respective variable.  
 
-#### Plotting the histograms
+<font size="4"><b>Plotting the histograms</b></font>  
 After the y range is set to histogram has all needed information for the subplot to be created.  
 The data to be used is pulled from the class_df for the iteration, the variable to plot is passed in from the first for loop, the bins are set using the returned value from the set_bins_width() function and the colour is chosen depending on the subplot in question. 
 
@@ -270,7 +272,7 @@ The legend is generated and font size chosen. Using the "loc"  and "bbox_to_anch
 
 The file is then saved and the user is informed the file has been created using the value set as the PNG_filename at the beginning of the function.
 
-**Main Program Code Snippet**
+<font size="4"><b>Main Program Code Snippet</b></font> 
 
 ![Code in main block relevant for and triggering hist of all varables seperated per class](Images_for_readme/create_hist_all_portrait1(3).png)
 
@@ -308,7 +310,7 @@ Ideas for what to include for analysis :
 
 ![Calculated correlation table](Images_for_readme/Correlation_table.png)
 
-<font size="4"><b>Overall dataset:</b></font> 
+<font size="4"><b>Overall dataset:</b></font>  
 When looking at the calculated correlation between the variables using the entire dataset we can see that some pairs of variables appear to be strongly linked. 
 
 **Variables showing strong positive correlation**
@@ -338,7 +340,7 @@ Next we'll factor in the class of Iris to see if the correlation between the var
 
 <font size="4"><b>Breakdown per species:</b></font> 
 
-##### *Setosa*
+*Setosa*
 
 **Variables showing strong positive correlation**
 - Sepal Width vs Sepal Length: 0.74678 
@@ -350,7 +352,7 @@ Next we'll factor in the class of Iris to see if the correlation between the var
 - Petal Length vs Sepal Length: 0.263874
 - Petal Length vs Sepal Width: 0.176695
 
-##### *Versicolor*
+*Versicolor*
 
 **Variables showing strong positive correlation**
 - Petal Width vs Petal Length: 0.786668  
@@ -362,7 +364,7 @@ Next we'll factor in the class of Iris to see if the correlation between the var
 - Petal Width vs Sepal Length: 0.546461
 - Sepal Width vs Sepal Length: 0.525911
 
-##### *Virginica*
+*Virginica*
 
 **Variables showing strong positive correlation**
 - Petal Length vs Sepal Length: 0.864225  
@@ -426,7 +428,7 @@ From the above we can see that the classes overlap for some variables more that 
 
 Next we'll take a look further into the different variables separately.
 
-##### Petal length
+<font size="4"><b>Petal length</b></font> 
 
 ![Histogram showing petal length overall and per class](Images_for_readme/hist_petal_length.png)  
 
@@ -446,7 +448,7 @@ This shows us that the Setosa class are more easily distinguished from the remai
 Looking at the data isolated per graph we can see the distribution for the Versicolor and Virginica more clearly.  
 For Versicolor we can see the histogram is a unimodal struction, while not as severe as the Setosa, there is one peak. While Virginica we do not have as drastic of a difference between the bins. 
 
-##### Petal width
+<font size="4"><b>Petal width</b></font> 
 
 ![Histogram showing petal width overall and per class](Images_for_readme/hist_petal_width.png)
 
@@ -463,7 +465,7 @@ With the Versicolor and Virginica classes we see the again slight overlap in the
 We can see that that the histogram for the Versicolor class is unimodal with a clear peak in the distribution and again seems to lie in the middle Setosa and Virginica in terms of size.  
 The Virginica class appears to have again a less distinct peak and has more of a spread with the largest standard deviation of the group (0.27cm) and the largest petals in both length and width.
 
-##### Sepal length
+<font size="4"><b>Sepal length</b></font> 
 
 ![Histogram showing sepal length overall and per class](Images_for_readme/hist_sepal_length.png)
 
@@ -477,7 +479,7 @@ When looking at the classes isolated with their own plots we can see that again 
 
 The range for Versicolor, like for the petal width and length, appears to be in the middle of the Setosa and Virginica clusters. Virginica again seeming to contriubute mostly to the right end of the plot with larger sepal length. 
 
-##### Sepal Width 
+<font size="4"><b>Sepal Width</b></font> 
 
 ![Histogram showing sepal width overall and per class](Images_for_readme/hist_sepal_width.png)  
 
@@ -599,9 +601,6 @@ In the case of analysis.py file it allows for the variable to be used to plot th
 > items() - Returns a view option that contains key-pair values in from a dictionary.   
 For *analysis.py* it is pulling the variable and png filename to be used with the enumerate function for the histogram loop.  It is also used to pull the information of the class name and respective filtered information from the dataset for the scatter plot and the large histogram of all variables separated per species.
 
-
-
-
 #### Next actions/To-do list:
 - Start adding analysis and observation to the notebook.ipynb
 - Add extra analysis and commentary to accompany the plots in notebook
@@ -615,7 +614,6 @@ For *analysis.py* it is pulling the variable and png filename to be used with th
 
 - Research & summary of dataset  
 - Purpose of project
-- Explanation for newest histogram
 - Analysis of own findings (including comparison to findings of published studies or analysis online from others)
 - Conclusion 
 - Footnotes & additional reading section
