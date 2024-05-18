@@ -65,14 +65,14 @@ While the petal width and length may be a commonly understood variable, the sepa
     - hist_all_variables_per_species.png 
     - hist_variables_overview.png
 1. If the code has run successfully, you will see confirmation printed when each file is created  
-        ![File creation confirmation messages](Images_for_readme/image-7.png)
+        ![File creation confirmation messages](Images_for_readme/creation_confirmation_messages.png)
 
 ### Error handling within *analysis.py*
 Error handling is including in the code to ensure if a file is already existing in the folder with the same filename the user will be informed.
 
 The error messages will look like this:  
 
-![Example of error messages](Images_for_readme/image-8.png)
+![Example of error messages](Images_for_readme/error_messages.png)
 
 If the error message for a file is returned that file will not be re-created or overwritten.
 If you want to rerun the code and create the files again, you'll need to delete the existing file or files first.    
@@ -91,7 +91,7 @@ To have a concise view of code for the generation of the different files the ord
 
 ### Importing required libraries
 
-![Importing libraries](Images_for_readme/image.png)
+![Importing libraries](Images_for_readme/importing_libraries.png)
 
 > ℹ️ *For more details on the libraries and information of the functions used within each libraries check the "![Libraries within python](https://github.com/Ange-Dvs/pands-project/blob/main/README.md#libraries-within-python)" section*
 
@@ -99,7 +99,7 @@ To have a concise view of code for the generation of the different files the ord
 
 Before any analysis can be done the data from the dataset must be fetched. 
 
-![Reading in the data](Images_for_readme/image-9.png)
+![Reading in the data](Images_for_readme/reading_in_the_data.png)
 
 After the dataset is assigned to `original_df`, a clean is done to remove some characters from the column headers.  This is done to ensure that the data shown for the dataset using `describe()` in the text file is keep in the same row. As previously it was being separated due to the length of the column headers. 
 
@@ -110,7 +110,7 @@ The file with the modified headers is then saved to be used.
 The first function which will be explained is reused throughout the code called the `check_png_file_exists()` function.  
 This function enables an error message to be returned to the user if a filename for one of the generated plots is already existing.
 
-![Checking if PNG file exists](Images_for_readme/image-10.png)
+![Checking if PNG file exists](Images_for_readme/check_png_file_exists.png)
 
 The above function reads in the value passed for the `PNG_filename` variable allowing the functionality to be reused throughout the program for the creation of multiple `.png` files.  
 
