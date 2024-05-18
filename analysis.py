@@ -1,19 +1,16 @@
 # analysis.py
-# For the project this program should: 
-#   1. Output a summary of each variable to a single text file > Done
-#   2. Saves a histogram of each variable to png files > Done
-#   3. Outputs a scatter plot of each pair of variables > Done
-#   Performs any other analysis you think is appropriate
+# This program reads in the IRIS dataset and performs analysis and generation of plots using the data. 
+# The generated plots are saved as .png files and a summary .txt file is created.
 # Author: Angela Davis
 
-#importing the libaries to use in the program
+#importing the libraries to use in the program
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 from tabulate import tabulate as tb
 
-#Creating functions that will be used in the program.
+#Creating functions that will be used in the program
 
 def check_png_file_exists(PNG_filenames): # creating a function which will check if the PNG files are already existing before trying to create them
     if os.path.exists(PNG_filenames): # using OS library the value set in "PNG_filenames" (defined outside of the function) is used to check if the file is already existing 
@@ -23,7 +20,7 @@ def write_summary_file(xy_value, dfs_to_use): # creating a function which will c
         text_file_name = 'IRIS_Summary.txt' # setting file name
         try: # first the new text file is attempted to be created 
                 with open(text_file_name, 'x', encoding='utf-8') as f: # "x" creates a new text file and the text_file_name variable defined at the beginning of the main code block is used to name the file. UTF-8 encoding is used to allow the table generated using tabulate to be added to the text file 
-                        num_values = df.describe() # getting a summary of the numberical values for  the entire dataset using .describe()
+                        num_values = df.describe() # getting a summary of the numerical values for  the entire dataset using .describe()
                         # filtering the data by the class and getting a summary of the numerical variables
                         setosa_info = df[df['class'] == 'Iris-setosa'].describe()
                         versicolor_info = df[df['class'] == 'Iris-versicolor'].describe()
@@ -62,7 +59,7 @@ def create_histograms(variables_and_filenames): # creating a function which can 
         for variable_to_plot, PNG_filenames in variables_and_filenames.items(): # Iterate over variables and filenames in variables and filename dictionary
                 try: # First this path is attempted to be executed
                         check_png_file_exists(PNG_filenames) # the function earlier created to check if the .png file already exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition
-                        plt.figure(figsize=(10,5)) # figure size is set to avoid the plot being overloaded and make it more readible for the user
+                        plt.figure(figsize=(10,5)) # figure size is set to avoid the plot being overloaded and make it more readable for the user
                         plt.subplot(1, 2, 1) # number of rows and columns needed for the subplot is defined
                         plt.hist(df[variable_to_plot]) # histogram is created using the value assigned to the variable_to_plot variables and the check the entire dataset
                         plt.title('All classes of Iris together') # adding the title to the first subplot
@@ -70,7 +67,7 @@ def create_histograms(variables_and_filenames): # creating a function which can 
                         plt.subplot(1, 2, 2) # plotting the subplot to be placed in the second column
                         all_sepal_lengths = [df[df['class'] == 'Iris-setosa'][variable_to_plot], df[df['class'] == 'Iris-versicolor'][variable_to_plot], df[df['class'] == 'Iris-virginica'][variable_to_plot]] # using the filtered datasets to select the information per class of Iris to enable colour coding of the histogram per class
 
-                        plt.hist(all_sepal_lengths, # plotting the histogram showing the the breakdown per class of Iris colour coded
+                        plt.hist(all_sepal_lengths, # plotting the histogram showing the breakdown per class of Iris colour coded
                                 stacked=True, # stacked enables stacking the data into neat columns with the species showing in a towered way on top of each other 
                                 label=['Setosa', 'Versicolor', 'Virginica'], # assigning the labels for the legend
                                 edgecolor='white', # setting the colour of the outline of the bins
@@ -99,7 +96,7 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
         try: 
                 check_png_file_exists(PNG_filenames) # the function earlier created to check if the png file exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition.
                 for i, (x_value, y_value) in enumerate(xy_value, start=1):
-                        if i in (1, 6, 11, 16): # if the value for i matches any defined in teh condition this path will be triggered by the program
+                        if i in (1, 6, 11, 16): # if the value for i matches any defined in the condition this path will be triggered by the program
                                 plt.subplot(4,4,i) # creating the subplots for the two variables passed each loop using value assigned for i to set the position of the subplot
                                 # removing x & y ticks
                                 plt.yticks([])
@@ -114,8 +111,8 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
                                 elif i == 16:
                                         plt.figtext(.86, .12, 'Petal\nWidth', ha='center', fontsize=22, fontstyle='italic')
                                         plt.tight_layout()
-                                        plt.suptitle('All variables', y=1.08, fontsize=32) # adding an overall title for the figure with a specified font size and postion
-                                        plt.figlegend(loc = 'upper center', ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14, labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top center for the plot. Manually setting the labels to avoid it being set repeatly in the loop
+                                        plt.suptitle('All variables', y=1.08, fontsize=32) # adding an overall title for the figure with a specified font size and position
+                                        plt.figlegend(loc = 'upper center', ncols = 3, bbox_to_anchor=(0.5, 1.04), fontsize=14, labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top centre for the plot. Manually setting the labels to avoid it being set repeatedly in the loop
                                         plt.savefig(PNG_filenames, bbox_inches='tight') # saving scatter plot as PNG file with bbox_inches set to tight to adjust to fit the whole figure
                                         print(f'{PNG_filenames} created.\n') # printing the confirmation for a histograms creation
                         else:
@@ -137,15 +134,15 @@ def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function wh
                                         if i in (3, 7, 8, 9, 10, 14): # removing of x and y ticks 
                                                 plt.yticks([])
                                                 plt.xticks([])
-                                        elif i == 2: # removing of y ticks and moving the x ticks to the top of the plot for easier readablity and to reflect every plot in that column
+                                        elif i == 2: # removing of y ticks and moving the x ticks to the top of the plot for easier readability and to reflect every plot in that column
                                                 plt.yticks([])
                                                 plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False)
-                                        elif i == 4: # moving the x & y ticks to the top of the plot for easier readablity and to reflect every plot in that column
+                                        elif i == 4: # moving the x & y ticks to the top of the plot for easier readability and to reflect every plot in that column
                                                 plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
                                                 plt.tick_params(axis='x', direction='out', top=True, labeltop=True, bottom=False, labelbottom=False)
                                         elif i == 5: # removing x ticks
                                                 plt.xticks([])
-                                        elif i == 12: # removing of x ticks and moving the y ticks to the right of the plot for easier readablity and to reflect every plot in that row
+                                        elif i == 12: # removing of x ticks and moving the y ticks to the right of the plot for easier readability and to reflect every plot in that row
                                                 plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False, labelleft=False)
                                                 plt.xticks([])
                                         elif i == 15: # removing y ticks
@@ -195,14 +192,14 @@ def create_histogram_per_classes(variables_and_filenames, dfs_to_use, df):
                                                 colour_to_use = 'orange' # setting the colour for the bins
                                                 plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False,
                                                                 labelleft=False) # moving the y ticks and labels to the right side of the plot
-                                        plt.title('--------------------------', fontsize=20) # adding dashes as the title to help seperate the subplots based on the variables
+                                        plt.title('--------------------------', fontsize=20) # adding dashes as the title to help separate the subplots based on the variables
                                         setting_axis_limits(s) # calling function for setting the limits for the range on the y axis
                                         plt.hist(class_df[variable_to_plot], bins=bin_edges, color=colour_to_use) # plotting the histogram setting the number of bins and colour of the bins
-                                        if s == 12: # checking is s eqauls 12 as this is the last subplot so figure should be saved and some details added
+                                        if s == 12: # checking is s equals 12 as this is the last subplot so figure should be saved and some details added
                                                 plt.tight_layout()
-                                                plt.suptitle('Histograms per class', y=1.075, fontsize=32) # adding an overall title for the figure with a specified font size and postion
+                                                plt.suptitle('Histograms per class', y=1.075, fontsize=32) # adding an overall title for the figure with a specified font size and position
                                                 plt.figlegend(loc='upper center', ncols=3, bbox_to_anchor=(0.5, 1.035), fontsize=14,
-                                                        labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top center for the plot. Manually setting the labels to avoid it being set repeatly in the loop
+                                                        labels=['Setosa', 'Versicolor', 'Virginica']) # creating one legend for the subplots and setting it's location to the top center for the plot. Manually setting the labels to avoid it being set repeatedly in the loop
                                                 plt.savefig(PNG_filenames, bbox_inches='tight') # saving figure with bbox_inches set to tight to adjust to fit the whole figure 
                                                 print(f'{PNG_filenames} created.\n') # printing confirmation message to user
                                         s += 1 # value of s is increased by 1 to allow for the next subplot to be created 
@@ -214,7 +211,7 @@ def hist_all_df_all_variables(variables_and_filenames):
         PNG_filenames= 'hist_variables_overview.png'
         try:
                 check_png_file_exists(PNG_filenames)
-                plt.figure(figsize=(10,10)) # figure size is set to avoid the plot being overloaded and make it more readible for the user
+                plt.figure(figsize=(10,10)) # figure size is set to avoid the plot being overloaded and make it more readable for the user
                 for i, variable_to_plot in enumerate(variables_and_filenames, start=1): # Iterate over variables and filenames in variables and filename dictionary
                         plt.subplot(2, 2, i) # number of rows and columns needed for the subplot is defined
                         plt.hist(df[variable_to_plot]) # histogram is created using the value assigned to the variable_to_plot variables and the check the entire dataset
@@ -244,12 +241,12 @@ else:
 
 df = pd.read_csv('modified_iris_data.csv') # fetching data from the new tidied csv file
 
-# Defining lsit of variables to plot for x axis value and y axis value for scatter plot png
+# Defining list of variables to plot for x axis value and y axis value for scatter plot png
 xy_value = [('',''), ('sepal width', 'sepal length'), ('petal length', 'sepal length'), ('petal width', 'sepal length'), ('sepal length', 'sepal width'), ('',''), ('petal length', 'sepal width'), ('petal width', 'sepal width'), ('sepal length','petal length'), ('sepal width', 'petal length'), ('',''), ('petal width', 'petal length'), ('sepal length', 'petal width'), ('sepal width', 'petal width'), ('petal length','petal width'), ('','')]
 
 dfs_to_use = {'All classes -': df,'Setosa -': df[df['class'] == 'Iris-setosa'], 'Versicolor -': df[df['class'] == 'Iris-versicolor'], 'Virginica -': df[df['class'] == 'Iris-virginica']} # setting keypairs to be used for the loop when calculating the correlation coefficient. The df will then be possible to call using the value set as the name. It also filters the dataset based on class to be able to differeniate in plots later in the program
 
-# Defining dictionary of variables to plot for histograms and filenames for the individual histogram pngs
+# Defining dictionary of variables to plot for histograms and filenames for the individual histogram .pngs
 variables_and_filenames = {
     'sepal length': 'hist_sepal_length.png',
     'sepal width': 'hist_sepal_width.png',
