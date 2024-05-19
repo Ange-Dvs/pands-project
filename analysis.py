@@ -16,7 +16,7 @@ def check_png_file_exists(PNG_filenames): # creating a function which will check
     if os.path.exists(PNG_filenames): # using OS library the value set in "PNG_filenames" (defined outside of the function) is used to check if the file is already existing 
         raise FileExistsError # if the file exists the FileExists Error is thrown and it triggers the except path outside the function
 
-def write_summary_file(xy_value, dfs_to_use): # creating a function which will create the text file called IRIS_Summary.txt when one does not already exist. If it exists error is printed for user
+def summary_file(xy_value, dfs_to_use): # creating a function which will create the text file called IRIS_Summary.txt when one does not already exist. If it exists error is printed for user
         text_file_name = 'IRIS_Summary.txt' # setting file name
         try: # first the new text file is attempted to be created 
                 with open(text_file_name, 'x', encoding='utf-8') as f: # "x" creates a new text file and the text_file_name variable defined at the beginning of the main code block is used to name the file. UTF-8 encoding is used to allow the table generated using tabulate to be added to the text file 
@@ -29,7 +29,7 @@ def write_summary_file(xy_value, dfs_to_use): # creating a function which will c
                         data_types = df.dtypes # checking the data types of the variables in the dataset
                         count_class = df['class'].value_counts() # getting the count of the entries in the dataset per class of Iris
                         # setting the main text for the summary file using the variables defined above
-                        intro = (f'\t\t\t\t\t\t**** The IRIS dataset ****\n\nCreated in 1936, the Iris dataset is a popular dataset commonly used for exploring data analysis and data visualisation.\n\nThe dataset consists of measurements for 3 different classes (Setosa, Versicolor and Virginica) of Iris flowers. The number of rows in the dataset is {length_df}, meaning the we have the information for 150 Iris flowers tracked. To see how many entries are tracked per class of Iris we can use the value_count method.\n\n\t{count_class}.\n\nFrom the above we can see there are 50 entries per class detailed in the dataset, so each class accounts for a third of the entries in the dataset. As the class variable is plain text, the data type string will be applicable here.\n\nFour characteristics of the flowers were tracked including sepal length, sepal width, petal length and petal width. These four variables are numeric values and looking at the raw data we can see decimal places are present. With this, the data type used for this variables will be float. We can check this easily using pandas in python.\n\nVariable:\t\tData type:\n{data_types}\n\nFrom the above we can see that the data type for the numerical variables is in fact a float. For the class variable we can see object is stated. Within pandas the object data type is the most general data type and can hold any Python objects including strings.\n\nNext we will generate some statistical information which will be analysed in the README.ipynb in further details.\n\nNumerical summary looking only of all classes together:\n{num_values}\n\nNumerical summary looking only at the Setosa class:\n{setosa_info}\n\nNumerical summary looking only at the Versicolor class:\n{versicolor_info}\n\nNumerical summary looking only at the Virginica class:\n{virginica_info}\n')
+                        intro = (f'\t\t**** The IRIS dataset ****\n\nThe IRIS dataset is a popular dataset commonly used for exploring data analysis and data visualisation. Used first by R.A. Fisher in 1936 to showcase a then new technique of linear discriminant analysis.\n\nThe dataset consists of measurements for 3 different classes (Setosa, Versicolor and Virginica) of Iris flowers. The number of rows in the dataset is {length_df}, meaning the we have the information for 150 Iris flowers tracked. To see how many entries are tracked per class of Iris we can use the value_count method.\n\n\t{count_class}.\n\nFrom the above we can see there are 50 entries per class detailed in the dataset, so each class accounts for exactly a third of the entries in the dataset. As the class variable is plain text, the data type string will be applicable here.\n\nIn addition to the categorical variable of the class of Iris, the dataset also records entries for the characteristics of the petal and sepal of the flower, tracking the petal length, petal width, sepal length and sepal width. These four variables are numeric decimal place values which would indicate data type float should be used, let us quickly check this next.\n\nVariable:\t\tData type:\n{data_types}\n\nFrom the above we can see that the data type for the numerical variables is in fact a float. For the class variable we can see object is stated. Within pandas the object data type is the most general data type and can hold any Python objects including strings.\n\nNext we will generate some statistical information which will be analysed in the README.md in further details.\n\nNumerical summary looking at the entire dataset as a whole:\n{num_values}\n\nNumerical summary looking only at the Setosa class:\n{setosa_info}\n\nNumerical summary looking only at the Versicolor class:\n{versicolor_info}\n\nNumerical summary looking only at the Virginica class:\n{virginica_info}\n')
                         f.write(intro) # writing intro into the text file, since the intro is a string already it doesn't need to be cast as string before writing
 
                         correlations = {} # creating an empty dictionary to be used to store the calculated values for the correlation coefficient in the for loop below
@@ -51,11 +51,12 @@ def write_summary_file(xy_value, dfs_to_use): # creating a function which will c
                         
                         f.write(f'\nCorrelation per pair of variables:\n') # writing a line to the text file to explain what the table is
                         f.write(table_to_print) # adding the table to the text file
+                        print(f'\n{text_file_name} created.\n') # printing confirmation summary file has been created for the user
 
         except FileExistsError: # if the file exists when it is attempted to use "x" to create the file then a FileExistsError is thrown
                 print (f'\nError: Filename {text_file_name} already exists in folder.\n') # This message will be printed to the user if the FileExistsError is triggered
 
-def create_histograms(variables_and_filenames): # creating a function which can be reused to create a histogram of each variable and also to check if the file is already existing
+def hist_overall_and_per_class(variables_and_filenames): # creating a function which can be reused to create a histogram of each variable and also to check if the file is already existing
         for variable_to_plot, PNG_filenames in variables_and_filenames.items(): # Iterate over variables and filenames in variables and filename dictionary
                 try: # First this path is attempted to be executed
                         check_png_file_exists(PNG_filenames) # the function earlier created to check if the .png file already exists is triggered. If the file does not exist the code will continue to the next line. If the file does already exist the FileExistsError will be thrown and the code will jump to the except condition
@@ -89,7 +90,7 @@ def create_histograms(variables_and_filenames): # creating a function which can 
                 except FileExistsError: # If the PNG file is found to already exist when calling check_png_file_exists() function this path is triggered as the next step
                         print(f'Error: Filename {PNG_filenames} already exists in folder. \n') # printing the error that the histogram already exists
 
-def create_scatter_all_variables(xy_value, dfs_to_use): # creating a function which is generating the scatter plot with showing all variables compared to each other
+def scatter_all_variables(xy_value, dfs_to_use): # creating a function which is generating the scatter plot with showing all variables compared to each other
         PNG_filenames = 'scatter_all_variables.png'
         plt.figure(figsize=(9, 9)) # figure size is set to avoid the plot being overloaded
         # Iterate over variables and filenames
@@ -170,7 +171,7 @@ def set_bins_width(variable_to_plot, df):
         bin_edges = np.linspace(min_width, max_width, 11) # creating an array of 11 evenly spaced numbers within the range of the min and max values set to the min_width and max_width variable. This will ensure that each of the histogram has space for 10 evenly spaced bins within that entire range
         return bin_edges # returning the value of the bins
 
-def create_histogram_per_classes(variables_and_filenames, dfs_to_use, df):
+def hist_sep_per_class(variables_and_filenames, dfs_to_use, df):
         PNG_filenames = 'hist_all_variables_per_species.png' # setting PNG filename to use
         try: # first this block of code will be attempted if FileExistsError is thrown program skips to the except code block
                 check_png_file_exists(PNG_filenames) # checking if the file exists
@@ -207,7 +208,7 @@ def create_histogram_per_classes(variables_and_filenames, dfs_to_use, df):
         except FileExistsError: # following this path if file exists
                 print(f'\nError: Filename {PNG_filenames} already exists in folder.\n') # printing error for user
 
-def hist_all_df_all_variables(variables_and_filenames):
+def hist_sum_all_variables(variables_and_filenames):
         PNG_filenames= 'hist_variables_overview.png'
         try:
                 check_png_file_exists(PNG_filenames)
@@ -218,7 +219,7 @@ def hist_all_df_all_variables(variables_and_filenames):
                         plt.xlabel(f'{variable_to_plot} (cm)', fontsize=14)
 
                         if i == 4: 
-                                plt.suptitle('All classes of Iris together', y=.98, fontsize=18) # adding the title to the first subplot
+                                plt.suptitle('Overview of distribution for all variables', y=.98, fontsize=18) # adding the title to the first subplot
                                 plt.tight_layout()
                                 plt.savefig(PNG_filenames, bbox_inches='tight') # saving histograms as a PNG file with bbox_inches set to tight to avoid any text or info being cut from the figure
                                 print(f'{PNG_filenames} created.\n') # printing the confirmation for a histograms creation
@@ -237,7 +238,7 @@ if os.path.exists('modified_iris_data.csv'):
 else:
         # Saving modified dataset back to a new CSV file so that we can use the tidied information for the plots
         original_df.to_csv('modified_iris_data.csv', index=False)
-        print('\nmodified_iris_data.csv created\n')
+        print('\nmodified_iris_data.csv created')
 
 df = pd.read_csv('modified_iris_data.csv') # fetching data from the new tidied csv file
 
@@ -253,12 +254,12 @@ variables_and_filenames = {
     'petal length': 'hist_petal_length.png',
     'petal width': 'hist_petal_width.png'}
 
-write_summary_file(xy_value, dfs_to_use) # calling function to create summary text file
+summary_file(xy_value, dfs_to_use) # calling function to create summary text file
 
-create_histograms(variables_and_filenames) # calling function to create the required histograms per variable in the dataset
+hist_overall_and_per_class(variables_and_filenames) # calling function to create the histograms per variable in the dataset showing the histogram for overall dataset and the colour coded per class in subplots
 
-create_scatter_all_variables(xy_value, dfs_to_use) # calling function to create the scatter plot comparing all variables 
+scatter_all_variables(xy_value, dfs_to_use) # calling function to create the scatter plot comparing all variables 
 
-create_histogram_per_classes(variables_and_filenames, dfs_to_use, df) # calling function which is creating a figure with all variables plotted to histograms filtered by class of Iris
+hist_sep_per_class(variables_and_filenames, dfs_to_use, df) # calling function which is creating a figure with all variables plotted to histograms with separate subplots per class for the variables of Iris
 
-hist_all_df_all_variables(variables_and_filenames) # figure showing the high level plots of all variables in the dataset
+hist_sum_all_variables(variables_and_filenames) # calling function which is creating figure showing plots of all variables in the dataset (no colour coding per class)
