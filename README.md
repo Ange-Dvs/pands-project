@@ -91,7 +91,7 @@ To have a concise view of code for the generation of the different files the ord
 
 ### Importing required libraries
 
-![Importing libraries](Images_for_readme\code_snippets\importing_libraries.png)
+![Importing libraries](Images_for_readme/code_snippets/importing_libraries.png)
 
 > ℹ️ *For more details on the libraries and information of the functions used within each libraries check the "[Libraries within python](https://github.com/Ange-Dvs/pands-project/blob/main/README.md#libraries-within-python)" section*
 
@@ -99,7 +99,7 @@ To have a concise view of code for the generation of the different files the ord
 
 Before any analysis can be done the data from the dataset must be fetched. 
 
-![Reading in the data](Images_for_readme\code_snippets\reading_in_the_data.png)
+![Reading in the data](Images_for_readme/code_snippets/reading_in_the_data.png)
 
 After the dataset is assigned to `original_df`, a clean is done to remove some characters from the column headers.  This is done to ensure that the data shown for the dataset using `describe()` in the text file is keep in the same row. As previously it was being separated due to the length of the column headers. 
 
@@ -110,7 +110,7 @@ The file with the modified headers is then saved to be used.
 The first function which will be explained is reused throughout the code called the `check_png_file_exists()` function.  
 This function enables an error message to be returned to the user if a filename for one of the generated plots is already existing.
 
-![Checking if PNG file exists](Images_for_readme\code_snippets\check_png_file_exists.png)
+![Checking if PNG file exists](Images_for_readme/code_snippets/check_png_file_exists.png)
 
 The above function reads in the value passed for the `PNG_filename` variable allowing the functionality to be reused throughout the program for the creation of multiple `.png` files.  
 
@@ -121,8 +121,8 @@ The `os` library is used to check if the path exists for the file and raises a `
 
 Next, we'll take a look at the function for the creation of the summary file `summary_file()`.
 
-![Code for creating text summary file part1](Images_for_readme\code_snippets\summary_file_1.png)
-![Code for creating text summary file part2](Images_for_readme\code_snippets\summary_file_2.png)
+![Code for creating text summary file part1](Images_for_readme/code_snippets/summary_file_1.png)
+![Code for creating text summary file part2](Images_for_readme/code_snippets/summary_file_2.png)
 
 <font size="4"><b>Definition of variables and main text created for the text file</b></font> 
 
@@ -154,7 +154,7 @@ The tabulate library is then used to take the `corr_table` list and format it as
 
 **Main Program Code Snippet**
 
-![Summary code in main block for creating text file](Images_for_readme\code_snippets\summary_file_mcb.png)
+![Summary code in main block for creating text file](Images_for_readme/code_snippets/summary_file_mcb.png)
 
 To make the code easily readable, the amount of code outside of the functions is kept to a minimum, for the creation of the summary file the relevant components in the main code block can be seen above. 
 1. The `xy_value` list - used to set the variables which should be used for calculating the correlation coefficient
@@ -163,8 +163,8 @@ To make the code easily readable, the amount of code outside of the functions is
 
 ### Creating the scatter plot
 
-![Code showing function for creating scatter plot image 1](Images_for_readme\code_snippets\scatter_all_variables1.png)
-![Code showing function for creating scatter plot image 2](Images_for_readme\code_snippets\scatter_all_variables2.png)
+![Code showing function for creating scatter plot image 1](Images_for_readme/code_snippets/scatter_all_variables1.png)
+![Code showing function for creating scatter plot image 2](Images_for_readme/code_snippets/scatter_all_variables2.png)
 
 
 The function uses the tuples from the `xy_value` list to generate a figure containing 16 subplots.
@@ -196,7 +196,7 @@ Similarly for the y-axis the y labels and ticks are set to be placed on the righ
 
 **Main Program Code Snippet**
 
-![Code in main block relevant for and triggering scatter_all_variables function](Images_for_readme\code_snippets\scatter_all_variables_mcb.png)
+![Code in main block relevant for and triggering scatter_all_variables function](Images_for_readme/code_snippets/scatter_all_variables_mcb.png)
 
 For the creation of the scatter plot file the relevant components in the main code block can be seen above. 
 1. The `xy_value` list - used to set the variables for the x and y axis of each subplot depending on the iteration of the parent `for` loop within the function
@@ -211,7 +211,7 @@ The *analysis.py* code generates a number of histograms saved as `.png` file. Th
 
 The next section will handle the creation of figures containing 2 subplots, showing the distribution of each variable for the entire dataset and then factoring in the class of Iris.
 
-![Code for creating png with 2 histograms, one showing a variable overall and the second factoring the class](Images_for_readme\code_snippets\hist_overall_and_per_class.png)
+![Code for creating png with 2 histograms, one showing a variable overall and the second factoring the class](Images_for_readme/code_snippets/hist_overall_and_per_class.png)
 
 The function uses the keypair values from the `variable_and_filenames` dictionary.  
 
@@ -230,7 +230,7 @@ Lastly, the file is saved using the filename passed in from the dictionary, it i
 
 **Main Program Code Snippet**
 
-![Code in main block relevant for and triggering create_histogram function](Images_for_readme\code_snippets\hist_overall_and_per_class_mcb.png)
+![Code in main block relevant for and triggering create_histogram function](Images_for_readme/code_snippets/hist_overall_and_per_class_mcb.png)
 
 For the creation of the histogram file the relevant components in the main code block can be seen above. 
 1. The `variables_and_filenames` dictionary - used for passing the variable to plot in a loop to the function and the related filename to use when saving the figures.
@@ -238,7 +238,7 @@ For the creation of the histogram file the relevant components in the main code 
 
 #### ii. Creating histograms of each variable per class
 
-![Code showing function for creating histogram of each variable separated per class](Images_for_readme\code_snippets\hist_sep_per_class.png)
+![Code showing function for creating histogram of each variable separated per class](Images_for_readme/code_snippets/hist_sep_per_class.png)
 
 Like the other plots, a check is done to ensure the file is not already existing using !`check_png_file_exists()` and the user is informed.  
 If the file is not existing already, the program continues in the `try` path.  
@@ -282,7 +282,7 @@ The file is then saved and the user is informed the file has been created.
 
 <font size="4"><b>Main Program Code Snippet</b></font> 
 
-![Code in main block relevant for and triggering hist of all variables separated per class](Images_for_readme\code_snippets\hist_sep_per_class_mcb.png)
+![Code in main block relevant for and triggering hist of all variables separated per class](Images_for_readme/code_snippets/hist_sep_per_class_mcb.png)
 
 For the creation of the histogram file the relevant components in the main code block can be seen above. 
 1. The `dfs_to_use` dictionary - used for selecting which data to use in creation of the scatter plots, these values are also used for selecting the colour to be used in the loop for each class.
@@ -291,7 +291,7 @@ For the creation of the histogram file the relevant components in the main code 
 
 #### iii. Creating histograms for each variable for the entire dataset
 
-![Code showing function for creating figure showing subplot of each variable using entire dataset](Images_for_readme\code_snippets\hist_sum_all_variables.png)
+![Code showing function for creating figure showing subplot of each variable using entire dataset](Images_for_readme/code_snippets/hist_sum_all_variables.png)
 
 Like the other plots, a check is done to ensure the file is not already existing !`check_png_file_exists()` and informs the user if this is the case.  
 If the file is not existing already, the program continues the `try` path.  
@@ -303,7 +303,7 @@ On the fourth iteration, the loop completes additional one-time steps like addin
 
 **Main Program Code Snippet**
 
-![Code in main block relevant for and triggering hist_all_df_variables](Images_for_readme\code_snippets\hist_sum_all_variables_mcb.png)
+![Code in main block relevant for and triggering hist_all_df_variables](Images_for_readme/code_snippets/hist_sum_all_variables_mcb.png)
 
 For the creation of the histogram file the relevant components in the main code block can be seen above. 
 1. The `variables_and_filenames` dictionary - used for passing the variable to plot when creating the subplots.
@@ -404,7 +404,7 @@ If the understanding of the correlation of the variables was based solely on the
 
 ### Scatter plot analysis
 
-![Scatterplot output](Images_for_readme\plots\scatter_all_variables.png)
+![Scatterplot output](Images_for_readme/plots/scatter_all_variables.png)
 
 Looking at the scatter plot above we can make some interesting observation. 
 
@@ -425,7 +425,7 @@ By seeing the plots of the pairings colour coding per class we can match the cal
 
 Moving next to the histograms we'll start by looking at a high-level summary showing a histogram per variable for the dataset as a whole.
 
-![Histogram showing all variables using entire dataset](Images_for_readme\plots\hist_variables_overview.png)
+![Histogram showing all variables using entire dataset](Images_for_readme/plots/hist_variables_overview.png)
 
 Looking at the variables plotted in each of the subplots, the data seems quite spread out with the majority of histograms containing more than one peak.  
 
@@ -435,7 +435,7 @@ Then for sepal width this histogram appears to be unimodal.
 
 Next, we'll take a look at the histograms factoring in the class of Iris, to see if this provides any further insight for the distribution of the variables.
 
-![Histogram showing all variables overall and per class](Images_for_readme\plots\hist_class_included.png)
+![Histogram showing all variables overall and per class](Images_for_readme/plots/hist_class_included.png)
 
 From a quick look at the above, we can see that the classes overlap for some variables more than others. With some appearing to show more similarities in size while others having distinct clusters depending on the class. 
 
@@ -443,7 +443,7 @@ Keeping this in mind, we'll take a look further into the different variables sep
 
 <font size="4"><b>Petal length</b></font> 
 
-![Histogram showing petal length overall and per class](Images_for_readme\plots\hist_petal_length.png)  
+![Histogram showing petal length overall and per class](Images_for_readme/plots/hist_petal_length.png)  
 
 When looking at the Petal length for the entire dataset as one, there appears to be moderate variety in the data, with one peak completely separated from the remaining cluster. 
 
@@ -456,7 +456,7 @@ For the Versicolor and Virginica we see an overlap with these two classes having
 
 This shows us that the Setosa class are more easily distinguished from the remaining classes when it comes to petal length. We also see that the Virginica class are likely to be the longest of the petals while the Versicolor will fall somewhere in between the two.
 
-![Histogram showing petal length separated per class](Images_for_readme\plots\petal_length_per_class.png)
+![Histogram showing petal length separated per class](Images_for_readme/plots/petal_length_per_class.png)
 
 Looking at the data isolated per graph we can see the distribution for the Versicolor and Virginica more clearly.  
 For Versicolor we can see the histogram is a unimodal structure, while not as severe as the Setosa, it has one peak. With Virginica class, we do not have as drastic of a difference between the bins. 
@@ -465,13 +465,13 @@ For Versicolor we can see the histogram is a unimodal structure, while not as se
 
 Coming to the next variable, we'll now move on to the petal width.
 
-![Histogram showing petal width overall and per class](Images_for_readme\plots\hist_petal_width.png)
+![Histogram showing petal width overall and per class](Images_for_readme/plots/hist_petal_width.png)
 
 Looking at the dataset as a whole, we see the histogram is multimodal with multiple peaks in the plot suggesting that there is a lot of variability in petal widths across the dataset.
 
 Interestingly, when we add the 3rd factor of class into the plot, we can see that the three peaks represent the main clusters for the individual classes. 
 
-![Histogram showing petal width separated per class](Images_for_readme\plots\petal_width_per_class.png)
+![Histogram showing petal width separated per class](Images_for_readme/plots/petal_width_per_class.png)
 
 Similarly to the petal length, we see that the Setosa data is clustered to the smaller end of the x-axis between (0.1cm to 0.6cm), with this clear separation of the petal width and length these characteristics could be a good candidate if trying to use the data to identify if an Iris is of the Setosa class.
 
@@ -482,13 +482,13 @@ The Virginica class appears to have a less distinct peak and has more of a sprea
 
 We'll next change from reviewing the petal characteristics to focus on the sepal length.
 
-![Histogram showing sepal length overall and per class](Images_for_readme\plots\hist_sepal_length.png)
+![Histogram showing sepal length overall and per class](Images_for_readme/plots/hist_sepal_length.png)
 
 Again, we see a multimodal histogram with the majority of the data clustered to the centre and left of the plot.  
 
 In contrast to the histograms for petal length and width, we can see in the sepal length plot that there is much more of an overlap between the 3 species.  
 
-![Histogram showing sepal length separated per class](Images_for_readme\plots\sepal_length_per_class.png)
+![Histogram showing sepal length separated per class](Images_for_readme/plots/sepal_length_per_class.png)
 
 When looking at the classes isolated with their own plots, we can see that again the Setosa class falls towards the smaller end of the plot with a single peak. When also taking what we have learnt from the petal width and length into consideration, the data shows that the Setosa flowers tends to be clustered closely together in size, seeming to typically be smaller for these characteristics compared to the other classes. 
 
@@ -500,13 +500,13 @@ The range for Versicolor, like for the petal width and length, appears to be in 
 
 Lastly, we'll look to the sepal width.
 
-![Histogram showing sepal width overall and per class](Images_for_readme\plots\hist_sepal_width.png)  
+![Histogram showing sepal width overall and per class](Images_for_readme/plots/hist_sepal_width.png)  
 
 This histogram appears to be the closest of the variables to match the typical normal distribution shape, with one main peak around the mean (3.05cm).
 
 Like with the sepal width, there is much more overlap between the classes versus the histograms of the petal length and width. 
 
-![Histogram showing sepal width separated per class](Images_for_readme\plots\sepal_width_per_class.png)
+![Histogram showing sepal width separated per class](Images_for_readme/plots/sepal_width_per_class.png)
 
 In contrast to the other variables, we see the Setosa cluster is located primarily on the right of the plot, making up the majority of the entries for the larger values recorded. 
 
