@@ -566,17 +566,7 @@ In the case of *analysis.py* file it allows for the variable to be used to plot 
 > `.items` - Returns a view option that contains key-pair values in from a dictionary.   
 For *analysis.py* it is pulling the variable and `.png` filename to be used with the enumerate function for the histogram loop.  It is also used to pull the information of the class name and respective filtered information from the dataset for the scatter plot and the large histogram of all variables separated per species.[^]
 
-### Paper references: 
-
-Maeck, M. (2018) ‘La classification des iris de Fisher revisitée’, Naturalistes Belges, 99(3), pp. 7. Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=asn&AN=137579970&site=eds-live&scope=site
-
-Unwin, A. and Kleinman, K. (2021) ‘The iris data set: In search of the source of virginica’, Significance, 18(6), pp. 1-2. doi:10.1111/1740-9713.01589.
-
-Horst, A.M., Hill, A.P. and Gorman, K.B. (2022) ‘Palmer Archipelago Penguins Data in the palmerpenguins R Package - An Alternative to Anderson’s Irises’, R Journal, 14(1), pp. 244–254. doi:10.32614/rj-2022-020.
-
-Quoted in Andy Kirk (2012) Data Visualization: a Successful Design Process : Data Visualization: a Successful Design Process. Birmingham, UK: Packt Publishing (Community Experience Distilled). Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=e000xww&AN=526173&site=eds-live&scope=site 
-
-## Footnotes: 
+## End
 
 [^1]: Quoted in Andy Kirk (2012) Data Visualization: a Successful Design Process : Data Visualization: a Successful Design Process. Birmingham, UK: Packt Publishing (Community Experience Distilled). Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=e000xww&AN=526173&site=eds-live&scope=site  
 [^2]: https://en.wikipedia.org/wiki/Iris_flower_data_set#:~:text=).%5B1%5D-,Use%20of%20the%20data%20set,-%5Bedit%5D  
@@ -610,5 +600,3 @@ Quoted in Andy Kirk (2012) Data Visualization: a Successful Design Process : D
 [^30]: https://www.geeksforgeeks.org/python-dictionary-items-method/   
    
 [^]: https://www.markdownguide.org/hacks/ - Details for enhancing formatting in markdown.
-
-## End
