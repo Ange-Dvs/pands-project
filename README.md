@@ -203,7 +203,7 @@ Then the histogram is created again for the subplot in the second position. Howe
 <font size="4"><b>Customizing the histograms</b></font> 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Along with the figure size being set, there are various settings defined for customizing the appearance of the histogram.
-The colour to be used for plotting the data per class is defined, the yticks are removed from the second subplot to avoid overcrowding of the figure as it is using the same range as the first subplot.  An overall title detailing the variable which is being plotted is added and the font size and position set. A shared label for the x-axis is created using `figtext` since the plots share the same variable, the style, size and position of the text is defined. 
+The colour to be used for plotting the data per class is defined, the yticks are removed from the second subplot and no label is added to avoid overcrowding of the figure as it is using the same range as the first subplot.  An overall title detailing the variable which is being plotted is added and the font size and position set. A shared label for the x-axis is created using `figtext` since the plots share the same variable, the style, size and position of the text is defined. 
 
 Lastly, the file is saved using the filename passed in from the dictionary, it is ensured that no data like the title is cut off when saving using the `bbox_inches` attribute. A message is then printed to the user providing the filename and informing that the file has been created.
 
@@ -240,7 +240,7 @@ The `class_df` is then used to determine which class of data is represented in t
 The first item in the `dfs_to_use` list contains the entire unfiltered dataset, which we do not want to plot.   
 An `if` statement checks to ensure the plotting is only carried out for the other items in the list. 
 
-Depending on which subplot is being generated, the colour for the bins is set, the removal of the y ticks or repositioning of the ticks to the right-hand side of the plot in the last column of each row. A label is also added in these loops to show which variable is being plotted in the row.  
+Depending on which subplot is being generated, the colour for the bins is set, the removal of the y ticks or addition of a y label. A label for the x-axis is also added in these loops to show which variable is being plotted in the row.  
 The title field is used to create a line break in between the rows to emphasize the separation of the variables per row.
 
 <font size="4"><b>Setting y-axis range</b></font>  
@@ -276,7 +276,7 @@ For the creation of the histogram file the relevant components in the main code 
 If the file is not existing already, the program continues the `try` path.  
 
 The size of the final figure is then set. A `for` loop is initiated with a counter `i` starting at 1. This counter is important as it will be used to dynamically set the subplot location depending on the iteration. The variable to plot is taken from the `variable_and_filenames` dictionary. This dictionary is also used as the bases for the `for` loop ensuring that each variable will be plotted. 
-Al label is added to the x-axis of each subplot to identify which variable is being shown in a specific plot. 
+A label is added to the x-axis of each subplot to identify which variable is being shown in a specific plot. On the first and third iteration a y label is added.
 
 On the fourth iteration, the loop completes additional one-time steps like adding a title to the plot and setting the location and font size for the title. `Matplotlib.pyplot`'s `tight_layout` is used to adjust the space between the plots as needed. The file is then saved and a message returned to the user informing the file has been created and specifying the filename.
 
@@ -389,14 +389,13 @@ If the understanding of the correlation of the variables was based solely on the
 
 Due to the heavy overlap of the Versicolor and Virginica markers on the sepal length vs sepal width plot, we can determine that this pairing would not be recommended for the use of trying to distinguish between the different classes. The wide spread of data for the variables also shows us that there is a lot of variety in the ranges in this pairing.  
 
-In contrast we see the class markers overlapping a lot less for the petal length vs petal width plot and so this pairing may be a better candidate to use as clusters are more defined per the individual classes.
+In contrast we see the class markers overlapping a lot less for the petal length vs petal width plot and so this pairing may be a better candidate to use as clusters are more defined per the individual classes. We can also see that this pairing appears to have the strongest relationship when looking at the scatter plot, this we know is correct from our analysis of the calculated correlations, with the correlation coefficient of the petal width & petal width for the entire dataset coming to 0.962757. 
 
 From the plots we can also see that of the classes, the Virginica class tends to have the widest and longest petals, with Setosa being much smaller in this respect.  
 
-The scatter plot illustrates the variety in shape and size of the characteristics per class while also being a useful tool for potentially helping classify the data or make predictions about the class of an Iris depending on the measurements. For example, in this case, it would be most easily used to determine if an Iris was Setosa or not due to their more distinct sizes compared to the Versicolor and Virginica classes.
+The scatter plot illustrates the variety in shape and size of the characteristics per class while also being a useful tool for potentially helping classify the data or make predictions about the class of an Iris depending on the measurements. For example, it would be most easily used to determine if an Iris was Setosa or not due to their more distinct sizes compared to the Versicolor and Virginica classes.
 
-The scatter plot also helps to visualise the correlation previously discussed for each of the variables. 
-By seeing the plots of the pairings colour coding per class we can match the calculated correlation to the patterns in the plot, helping to show how the values of the variables per class impacts the correlation.
+The scatter plot also helps to visualise the correlation, by seeing the plots of the pairings colour coding per class we can match the calculated correlation to the patterns in the plot, helping to show how the values of the variables per class impacts the correlation.
 
 ### Histogram analysis
 
@@ -422,14 +421,14 @@ Keeping this in mind, we'll take a look further into the different variables sep
 
 ![Histogram showing petal length overall and per class](Images_for_readme/plots/hist_petal_length.png)  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When looking at the Petal length for the entire dataset as one, there appears to be moderate variety in the data, with one peak completely separated from the remaining cluster. 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;When looking at the Petal length for the entire dataset as one, there appears to be moderate variety in the data. The resulting histogram is non-symmetric bimodal shape, with one peak completely separated from the remaining cluster. 
 
-From the summary file we identified that the standard deviation for the petal length is 1.76cm. Knowing the range is 1cm (min) to 6.9cm (max) we can interpret that that there is a moderate spread from the mean. From the text file we can also see that the mean is 3.76cm and looking at the plot above we see that this is one of the smaller bins in the histogram and that the distribution is not uniform with a clear gap between two clusters in the histogram.
+From the summary file we identified that the standard deviation for the petal length is 1.76cm. Knowing the range is 1cm (min) &rarr; 6.9cm (max) we can interpret that that there is a moderate spread from the mean. From the text file we can also see that the mean is 3.76cm and looking at the plot above we see that this is one of the smaller bins in the histogram and that the distribution is not uniform with a clear gap between two clusters in the histogram.
 
 Adding in the class a new perspective is shown across the dataset.  
-For the Setosa we can see these flowers are separated from the rest with a strong grouping between 1 - 1.5 (cm). 
+For the Setosa we can see these flowers are separated from the rest, ranging from 1cm &rarr; 1.9cm, with a strong grouping between 1cm &rarr; 1.5cm. 
 
-For the Versicolor and Virginica we see an overlap with these two classes having more similarities when it comes to their petal length.
+For the Versicolor and Virginica we see an overlap with these two classes, suggesting these two classes have more similarities when it comes to their petal length compared to the Setosa class. With both classes contributing to the cluster on the right of the plot, spanning from 3cm &rarr; 6.9cm total, with Versicolor lying between 3cm &rarr; 5.1cm and Virginica between 4.5cm &rarr; 6.9cm. We can see for Versicolor the majority of entries lie between 4cm &rarr; 5cm. Lastly for the Virginica class we see the main grouping between 4.5cm &rarr; 5.75cm. 
 
 This shows us that the Setosa class are more easily distinguished from the remaining classes when it comes to petal length. We also see that the Virginica class are likely to be the longest of the petals while the Versicolor will fall somewhere in between the two.
 
@@ -442,46 +441,47 @@ For Versicolor we can see the histogram is a unimodal structure, while not as se
 
 ![Histogram showing petal width overall and per class](Images_for_readme/plots/hist_petal_width.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coming to the next variable, we'll now move on to the petal width. Looking at the dataset as a whole, we see the histogram is multimodal with multiple peaks in the plot suggesting that there is a lot of variability in petal widths across the dataset.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coming to the next variable, we'll now move on to the petal width. Looking at the dataset as a whole, we see the histogram is multimodal, ranging from 0.1cm &rarr; 2.5cm. The multiple peaks suggests that there is a lot of variability in petal widths across the dataset, from our summary file we can see there is a standard deviation of 0.763cm for the petal width suggesting moderate variability when comparing the overall range. 
 
 Interestingly, when we add the 3rd factor of class into the plot, we can see that the three peaks represent the main clusters for the individual classes. 
 
 ![Histogram showing petal width separated per class](Images_for_readme/plots/petal_width_per_class.png)
 
-Similarly to the petal length, we see that the Setosa data is clustered to the smaller end of the x-axis between (0.1cm to 0.6cm), with this clear separation of the petal width and length these characteristics could be a good candidate if trying to use the data to identify if an Iris is of the Setosa class.
+Similarly to the petal length, we see that the Setosa data is clustered to the smaller end of the x-axis between 0.1cm &rarr; 0.6cm, with this clear separation of the Setosa class from the rest when looking at the petal width and length, these characteristics could be a good candidate if trying to use the data for classification to identify if an Iris is of the Setosa class.
 
-With the Versicolor and Virginica classes, we again see slight overlap in the ranges. The histogram for the Versicolor class is unimodal with a clear peak in the distribution and lies again between the Setosa and Virginica classes in terms of size.  
-The Virginica class appears to have a less distinct peak and has more of a spread with the largest standard deviation of the group (0.27cm) and the largest petals in both length and width.
+With the Versicolor(1cm &rarr; 1.8cm) and Virginica(1.4cm &rarr; 2.5cm) classes, we again see slight overlap in the ranges. The histogram for the Versicolor class is unimodal with a clear peak in the distribution from 1.25cm &rarr; 1.5cm. The Versicolor entres again lie between the Setosa and Virginica classes in terms of size. 
+
+The Virginica class appears to have a less distinct peak and has more of a spread, this is confirmed by the standard deviation of 0.27cm making it the largest std of the group. From the histograms we can also see the Virginica call tends to the largest petals in both length and width.
 
 <font size="4"><b>Sepal length</b></font> 
 
 ![Histogram showing sepal length overall and per class](Images_for_readme/plots/hist_sepal_length.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We'll next change from reviewing the petal characteristics to focus on the sepal length. Again, we see a multimodal histogram with the majority of the data clustered to the centre and left of the plot.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We'll next change from reviewing the petal characteristics to focus on the sepal length. Again, we see a multimodal histogram with the majority of the data clustered to the centre and slightly left of the plot.  
 
 In contrast to the histograms for petal length and width, we can see in the sepal length plot that there is much more of an overlap between the 3 species.  
 
 ![Histogram showing sepal length separated per class](Images_for_readme/plots/sepal_length_per_class.png)
 
-When looking at the classes isolated with their own plots, we can see that again the Setosa class falls towards the smaller end of the plot with a single peak. When also taking what we have learnt from the petal width and length into consideration, the data shows that the Setosa flowers tends to be clustered closely together in size, seeming to typically be smaller for these characteristics compared to the other classes. 
+When looking at the classes isolated with their own plots, we can see that again the Setosa class falls towards the smaller end of the x-axis, ranging from 4.3cm &rarr; 7.9cm, with the centre of data a single peak from 4.75cm &rarr; 5cm. When also taking what we have learnt from the petal width and length into consideration, the data shows that the Setosa flowers tends to be clustered closely together in size, seeming to typically be smaller for these characteristics compared to the other classes. 
 
 While there are many intrinsic factors which could contribute to this similarity between the Versicolor and Virginica class, it has been noted that botanist Edgar Anderson (who provided the data for R.A. Fisher to use) believed that the versicolor class could be the "result of hybridisation between the virginica and another class of Iris" [^2]. This adds another perspective as to why we may see the similarities between the two classes, also acting as reminder that while we can analyse the information contained within the dataset, there is nuance and further context that is not reflected.
 
-The range for Versicolor, like for the petal width and length, appears to be in the middle of the Setosa and Virginica clusters. Virginica again seeming to contribute mostly to the right end of the plot with a larger sepal length. 
+The range for Versicolor, like for the petal width and length, appears to be in the middle of the Setosa and Virginica clusters from 4.9cm &rarr; 7cm. Virginica, like with the variables discussed before, seeming to contribute to some of the larger records for sepal length from 4.9cm &rarr; 7.9. We can also see that the Virginica class has the widest spread of sepal length recorded with a std of 0.64cm, the highest of the 3 classes. 
 
 <font size="4"><b>Sepal Width</b></font> 
 
 ![Histogram showing sepal width overall and per class](Images_for_readme/plots/hist_sepal_width.png)  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lastly, we'll look to the sepal width. This histogram appears to be the closest of the variables to match the typical normal distribution shape, with one main peak around the mean (3.05cm).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lastly, we'll look to the sepal width. This histogram appears to be the closest of the variables to the typical normal distribution shape, with one main peak around the mean (3.05cm).
 
 Like with the sepal width, there is much more overlap between the classes versus the histograms of the petal length and width. 
 
 ![Histogram showing sepal width separated per class](Images_for_readme/plots/sepal_width_per_class.png)
 
-In contrast to the other variables, we see the Setosa cluster is located primarily on the right of the plot, making up the majority of the entries for the larger values recorded. 
+In contrast to the other variables, we see the Setosa cluster is located primarily on the right of the plot, making up the majority of the entries for the larger values recorded from 2.3cm &rarr; 4.4cm. We can also see that the Setosa cluster has the most bins, indicating the highest level of variability within the Setosa class. This is confirmed by the std which for the sepal width is highest within the Setosa class with 0.38cm.
 
-Versicolor in comparison is making up the left tail of the distribution, like the Setosa class the Virginica data also appears to be unimodal with one peak. 
+In comparison Versicolor is making up the left tail of the distribution positioned from 2cm &rarr; 3.4cm with a std of 0.31 and Virginica sitting in the of the plot from 2.2cm &rarr; 3.8cm with the smallest std of the group with 0.3cm. Each of the classes individual histogram appears to most comparable to a unimodal shape with one peak. 
 
 From looking at the sepal variables (width and length) we see for both that the ranges for the sepal characteristics tend to overlap more than that of the petal characteristics. The would indicate that the sepal characteristics are a less suitable option for identifying the class. 
 
@@ -500,7 +500,6 @@ While there are some who question the use of the dataset, due to its simplicity 
 
 ## Additional resources/reading
 ### Libraries within python
-
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Within the program we are importing various external libraries and classes to use throughout the notebook including: 
 - `Pandas`
@@ -568,34 +567,36 @@ For *analysis.py* it is pulling the variable and `.png` filename to be used with
 
 ## End
 
-[^1]: Quoted in Andy Kirk (2012) Data Visualization: a Successful Design Process : Data Visualization: a Successful Design Process. Birmingham, UK: Packt Publishing (Community Experience Distilled). Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=e000xww&AN=526173&site=eds-live&scope=site  
-[^2]: Unwin, A. and Kleinman, K. (2021) ‘The iris data set: In search of the source of virginica’, Significance, 18(6), pp. 1-2. doi:10.1111/1740-9713.01589.  
-[^3]: https://en.wikipedia.org/wiki/Iris_flower_data_set#:~:text=).%5B1%5D-,Use%20of%20the%20data%20set,-%5Bedit%5D  
-[^4]: Horst, A.M., Hill, A.P. and Gorman, K.B. (2022) ‘Palmer Archipelago Penguins Data in the palmerpenguins R Package - An Alternative to Anderson’s Irises’, R Journal, 14(1), pp. 244–254. doi:10.32614/rj-2022-020.  
-[^5]: Maeck, M. (2018) ‘La classification des iris de Fisher revisitée’, Naturalistes Belges, 99(3), pp. 7. Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=asn&AN=137579970&site=eds-live&scope=site  
-[^6]: https://levelup.gitconnected.com/unveiling-the-mysteries-of-the-iris-dataset-a-comprehensive-analysis-and-machine-learning-f5c4f9dbcd6d#:~:text=as%20a%20percentage.-,Why%20is%20the%20Iris%20Dataset%20so%20Popular%3F,-The%20Iris%20dataset  
-[^7]: https://pandas.pydata.org/docs/user_guide/10min.html#min  
-[^8]: https://www.geeksforgeeks.org/python-pandas-dataframe-corr/  
-[^9]: https://medium.com/@anala007/how-to-reshape-your-dataframe-with-pandas-stack-and-unstack-functions-3e2c86edc04a  
-[^10]: https://matplotlib.org/stable/users/explain/colors/colors.html  
-[^11]: https://matplotlib.org/2.0.2/api/markers_api.html  
+[^1]: Quoted in Andy Kirk (2012) Data Visualization: a Successful Design Process : Data Visualization: a Successful Design Process. Birmingham, UK: Packt Publishing (Community Experience Distilled). Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=e000xww&AN=526173&site=eds-live&scope=site   
+[^2]: Unwin, A. and Kleinman, K. (2021) ‘The iris data set: In search of the source of virginica’, Significance, 18(6), pp. 1-2. doi:10.1111/1740-9713.01589.   
+[^3]: https://en.wikipedia.org/wiki/Iris_flower_data_set#:~:text=).%5B1%5D-,Use%20of%20the%20data%20set,-%5Bedit%5D   
+[^4]: Horst, A.M., Hill, A.P. and Gorman, K.B. (2022) ‘Palmer Archipelago Penguins Data in the palmerpenguins R Package - An Alternative to Anderson’s Irises’, R Journal, 14(1), pp. 244–254. doi:10.32614/rj-2022-020.   
+[^5]: Maeck, M. (2018) ‘La classification des iris de Fisher revisitée’, Naturalistes Belges, 99(3), pp. 7. Available at: https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=asn&AN=137579970&site=eds-live&scope=site   
+[^6]: https://levelup.gitconnected.com/unveiling-the-mysteries-of-the-iris-dataset-a-comprehensive-analysis-and-machine-learning-f5c4f9dbcd6d#:~:text=as%20a%20percentage.-,Why%20is%20the%20Iris%20Dataset%20so%20Popular%3F,-The%20Iris%20dataset   
+[^7]: https://pandas.pydata.org/docs/user_guide/10min.html#min   
+[^8]: https://www.geeksforgeeks.org/python-pandas-dataframe-corr/   
+[^9]: https://medium.com/@anala007/how-to-reshape-your-dataframe-with-pandas-stack-and-unstack-functions-3e2c86edc04a   
+[^10]: https://matplotlib.org/stable/users/explain/colors/colors.html   
+[^11]: https://matplotlib.org/2.0.2/api/markers_api.html   
 [^12]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html  
-[^13]: https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.suptitle.html  
-[^14]: https://www.w3schools.com/python/matplotlib_scatter.asp  
-[^15]: https://www.geeksforgeeks.org/matplotlib-pyplot-hist-in-python/  
-[^16]: https://www.pythoncharts.com/matplotlib/histograms  
-[^17]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib-pyplot-xticks  
-[^18]: https://www.w3schools.com/python/matplotlib_labels.asp   
-[^19]: https://www.geeksforgeeks.org/how-to-set-the-x-and-the-y-limit-in-matplotlib-with-python/  
-[^20]: https://www.geeksforgeeks.org/matplotlib-pyplot-figtext-in-python/  
-[^21]: https://www.geeksforgeeks.org/matplotlib-pyplot-figure-in-python/  
-[^22]: https://numpy.org/devdocs/user/whatisnumpy.html
-[^23]: https://www.datacamp.com/tutorial/python-numpy-tutorial  
-[^24]: https://realpython.com/np-linspace-numpy/   
-
+[^13]: https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.suptitle.html   
+[^14]: https://www.w3schools.com/python/matplotlib_scatter.asp   
+[^15]: https://www.geeksforgeeks.org/matplotlib-pyplot-hist-in-python/   
+[^16]: https://www.pythoncharts.com/matplotlib/histograms   
+[^17]: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib-pyplot-xticks   
+[^18]: https://www.w3schools.com/python/matplotlib_labels.asp    
+[^19]: https://www.geeksforgeeks.org/how-to-set-the-x-and-the-y-limit-in-matplotlib-with-python/   
+[^20]: https://www.geeksforgeeks.org/matplotlib-pyplot-figtext-in-python/   
+[^21]: https://www.geeksforgeeks.org/matplotlib-pyplot-figure-in-python/   
+[^22]: https://numpy.org/devdocs/user/whatisnumpy.html  
+[^23]: https://www.datacamp.com/tutorial/python-numpy-tutorial   
+[^24]: https://realpython.com/np-linspace-numpy/    
 [^25]: https://www.analyticsvidhya.com/blog/2023/12/mastering-tabulate/   
-[^26]: https://docs.python.org/3/library/os.html
-[^27]: https://www.freecodecamp.org/news/how-to-check-if-a-file-exists-in-python/      
-[^28]: https://www.simplilearn.com/tutorials/python-tutorial/enumerate-in-python#what_does_enumerate_do_in_python 
+[^26]: https://docs.python.org/3/library/os.html  
+[^27]: https://www.freecodecamp.org/news/how-to-check-if-a-file-exists-in-python/       
+[^28]: https://www.simplilearn.com/tutorials/python-tutorial/enumerate-in-python#what_does_enumerate_do_in_python  
 [^29]: https://www.geeksforgeeks.org/python-dictionary-items-method/  
-[^]: https://www.markdownguide.org/hacks/ - Details for enhancing formatting in markdown. 
+
+[^]: https://www.markdownguide.org/hacks/ - Details for enhancing formatting in markdown.   
+[^]: https://www.labxchange.org/library/items/lb:LabXchange:10d3270e:html:1 - tips for reading histograms  
+[^]: https://www.westga.edu/academics/research/vrc/assets/docs/scatterplots_and_correlation_notes.pdf - tips for scatter plots and correlation analysis

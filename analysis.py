@@ -64,6 +64,7 @@ def hist_overall_and_per_class(variables_and_filenames): # creating a function w
                         plt.subplot(1, 2, 1) # number of rows and columns needed for the subplot is defined
                         plt.hist(df[variable_to_plot]) # histogram is created using the value assigned to the variable_to_plot variables and the check the entire dataset
                         plt.title('All classes of Iris together') # adding the title to the first subplot
+                        plt.ylabel('Frequency', fontsize=14) # adding a y label to the first subplot representing y axis for both plots
 
                         plt.subplot(1, 2, 2) # plotting the subplot to be placed in the second column
                         all_sepal_lengths = [df[df['class'] == 'Iris-setosa'][variable_to_plot], df[df['class'] == 'Iris-versicolor'][variable_to_plot], df[df['class'] == 'Iris-virginica'][variable_to_plot]] # using the filtered datasets to select the information per class of Iris to enable colour coding of the histogram per class
@@ -81,7 +82,7 @@ def hist_overall_and_per_class(variables_and_filenames): # creating a function w
 
                         plt.suptitle(f'Distribution of {variable_to_plot}', fontsize = 18, y= 1.05) # setting the overall title for the figure
                         # Adding a super x label to replace having two separate labels for the x axis setting the  position of the text, alignment, fontsize and style
-                        plt.figtext(0.5, -0.01, f'{variable_to_plot} (cm)', ha='center', fontsize=14, fontstyle='italic')
+                        plt.figtext(0.5, -0.01, f'{variable_to_plot} (cm)', ha='center', fontsize=14)
 
                         plt.savefig(PNG_filenames, bbox_inches='tight') # saving histograms as a PNG file with bbox_inches set to tight to avoid any text or info being cut from the figure
 
@@ -184,7 +185,8 @@ def hist_sep_per_class(variables_and_filenames, dfs_to_use, df):
                                         plt.subplot(4, 3, s) # dynamically setting the subplot position using the value assigned to s
                                         if s in (1, 4, 7, 10): # program will execute this block of code if the value for s matches one of the values in brackets
                                                 colour_to_use = 'violet'
-                                                plt.yticks([])
+                                               # plt.ylabel('Frequency', fontsize=14) # adding a y label to each row   
+                                                plt.ylabel('Frequency', fontsize=18)  # # adding a y label to the first subplot in each row representing y axis for all plots in row 
                                         elif s in (2, 5, 8, 11): # program will execute this block of code if the value for s matches one of the values in brackets
                                                 colour_to_use = 'navy' # setting colour for bins
                                                 plt.yticks([]) # removing y ticks since it will be the same range as the last plot in each row
@@ -193,6 +195,7 @@ def hist_sep_per_class(variables_and_filenames, dfs_to_use, df):
                                                 colour_to_use = 'orange' # setting the colour for the bins
                                                 plt.tick_params(axis='y', direction='out', right=True, labelright=True, left=False,
                                                                 labelleft=False) # moving the y ticks and labels to the right side of the plot
+                                                plt.yticks([])           
                                         plt.title('--------------------------', fontsize=20) # adding dashes as the title to help separate the subplots based on the variables
                                         setting_axis_limits(s) # calling function for setting the limits for the range on the y axis
                                         plt.hist(class_df[variable_to_plot], bins=bin_edges, color=colour_to_use) # plotting the histogram setting the number of bins and colour of the bins
@@ -217,6 +220,8 @@ def hist_sum_all_variables(variables_and_filenames):
                         plt.subplot(2, 2, i) # number of rows and columns needed for the subplot is defined
                         plt.hist(df[variable_to_plot]) # histogram is created using the value assigned to the variable_to_plot variables and the check the entire dataset
                         plt.xlabel(f'{variable_to_plot} (cm)', fontsize=14)
+                        if i in (1,3): # adding y label to the subplots located on the left
+                                plt.ylabel('Frequency', fontsize=14)
 
                         if i == 4: 
                                 plt.suptitle('Overview of distribution for all variables', y=.98, fontsize=18) # adding the title to the first subplot
