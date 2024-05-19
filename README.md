@@ -325,7 +325,7 @@ Next, we'll factor in the class of Iris to see if the correlation between the va
 
 <font size="4"><b>Breakdown per species:</b></font> 
 
-*Setosa*
+<font size="3"><b>*Setosa*</b></font> 
 
 **Variables showing strong positive correlation**
 - Sepal Width vs Sepal Length: 0.74678 
@@ -337,7 +337,7 @@ Next, we'll factor in the class of Iris to see if the correlation between the va
 - Petal Length vs Sepal Length: 0.263874
 - Petal Length vs Sepal Width: 0.176695
 
-*Versicolor*
+<font size="3"><b>*Versicolor*</b></font> 
 
 **Variables showing strong positive correlation**
 - Petal Width vs Petal Length: 0.786668  
@@ -349,7 +349,7 @@ Next, we'll factor in the class of Iris to see if the correlation between the va
 - Petal Width vs Sepal Length: 0.546461
 - Sepal Width vs Sepal Length: 0.525911
 
-*Virginica*
+<font size="3"><b>*Virginica*</b></font> 
 
 **Variables showing strong positive correlation**
 - Petal Length vs Sepal Length: 0.864225  
@@ -364,7 +364,7 @@ Next, we'll factor in the class of Iris to see if the correlation between the va
 - Petal Width vs Sepal Length: 0.281108  
 
 
-**Observations from correlation table**
+<font size="3"><b>**Observations from correlation table**</b></font> 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From the above breakdown we can see that there is in fact a difference in correlation for a pair of variables depending on the class of Iris, with an interesting variety in the results for the pairings across the dataset as a whole versus the individual classes.
 
@@ -498,7 +498,7 @@ From the use of these tools, it was possible to interpret the data to gain an un
 While there are some who question the use of the dataset, due to its simplicity and the absence of imperfect entries, it is easy to see why it has stood the test of time, the simplicity which some critic others praise [^6].  This simplicity of the dataset paired with the endless resources available online, makes it a great starting point for anyone dipping their toes in the world of data analysis to gain insights into tools used for analysis using the relatively simple set of data.
 
 
-## Additional resources/reading
+## Additional resources & reading
 ### Libraries within python
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Within the program we are importing various external libraries and classes to use throughout the notebook including: 
@@ -596,7 +596,6 @@ For *analysis.py* it is pulling the variable and `.png` filename to be used with
 [^27]: https://www.freecodecamp.org/news/how-to-check-if-a-file-exists-in-python/       
 [^28]: https://www.simplilearn.com/tutorials/python-tutorial/enumerate-in-python#what_does_enumerate_do_in_python  
 [^29]: https://www.geeksforgeeks.org/python-dictionary-items-method/  
-
-[^]: https://www.markdownguide.org/hacks/ - Details for enhancing formatting in markdown.   
-[^]: https://www.labxchange.org/library/items/lb:LabXchange:10d3270e:html:1 - tips for reading histograms  
-[^]: https://www.westga.edu/academics/research/vrc/assets/docs/scatterplots_and_correlation_notes.pdf - tips for scatter plots and correlation analysis
+[^30]: [Tips for enhancing formatting for README.md files](https://www.markdownguide.org/hacks/)  
+[^31]: [How to interpret histograms](https://www.labxchange.org/library/items/lb:LabXchange:10d3270e:html:1)  
+[^32]: [Scatterplots and Correlation - Based on Chapter 4 of The Basic Practice of Statistics (6th ed.)](https://www.westga.edu/academics/research/vrc/assets/docs/scatterplots_and_correlation_notes.pdf)
